@@ -1,7 +1,17 @@
 \input{../entete}
+
+\newcommand{\OMInput}[1]{
+    \def \OMLabel {#1}
+    \input{partials/#1}
+}
+
 \begin{document}
 
-\Document{Nom du document}
-%\input{partials/}
+\Document{Modèles des opérations}
+
+\OMInput{balance}
+\OMInput{receptacle}
+\OMInput{ronde}
+\OMInput{web}
 
 \end{document}
