@@ -1,14 +1,21 @@
 \input{../entete}
 
 \newcommand{\InputEM}[1]{
-    \def \EMLabel {sec:#1}
+    \def \EMLabel {#1}
     \input{partials/#1}
 }
 
 \newenvironment{EM}[1]{
     \section{#1}
-    \label{\EMLabel}
-}{}
+    \def \EMName {#1}
+    \label{sec:\EMLabel}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{images/\EMLabel}
+        \caption{Schéma du modèle de l'environnement "#1"}
+    \end{figure}
+}{
+}
 
 \newcommand{\EMActor}[2]{
     \subsection{#1} #2
