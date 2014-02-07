@@ -1,12 +1,14 @@
 \input{../entete}
 
 \newcommand{\InputEM}[1]{
+    \def \EMLabel {sec:#1}
     \input{partials/#1}
 }
 
-\newcommand{\EMName}[1]{
+\newenvironment{EM}[1]{
     \section{#1}
-}
+    \label{\EMLabel}
+}{}
 
 \newcommand{\EMActor}[2]{
     \subsection{#1} #2

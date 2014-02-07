@@ -1,29 +1,41 @@
-\EMName{Drone}
+\begin{EM}{Drone}
+    \EMActor{tapisRoulant}{}
+    \begin{EMUCActor}{}
+        \EMOperation{colisPret()}{}{}
+        \EMOperation{activerTapis(e)}{}{}
+    \end{EMUCActor}
 
-* tapisRoulant :
-   * colisPret():
-   * activerTapis(e:boolean):
+    \EMActor{trappe}{}
+    \begin{EMUCActor}{}
+        \EMOperation{OuvrirTrappe()}{}{}
+        \EMOperation{FermerTrappe()}{}{}
+        \EMOperation{ActiverSystUrgence()}{}{}
+    \end{EMUCActor}
 
-* trappe :
-   * OuvrirTrappe():
-   * FermerTrappe():
-   * ActiverSystUrgence():
+    \EMActor{systemeRonde}{}
+    \begin{EMUCActor}{}
+        \EMOperation{EnvoyerDrone(itineraire)}{}{}
+        \EMOperation{ConfirmationLivraison()}{}{}
+        \EMOperation{SignalementErreur(msg)}{}{}
+        \EMOperation{SignalerRetour()}{}{}
+        \EMOperation{EstDisponible(e)}{}{}
+    \end{EMUCActor}
 
-* systemeRonde :
-   * EnvoyerDrone(itineraire):
-   * ConfirmationLivraison():
-   * SignalementErreur(msg):
-   * SignalerRetour():
-   * EstDisponible(e):
+    \EMActor{listeColis}{}
+    \begin{EMUCActor}{}
+        \EMOperation{verificationColisActuel(idColis)}{}{}
+    \end{EMUCActor}
 
-* listeColis :
-   * verificationColisActuel(idColis):
+    \EMActor{systemeReceptacle}{voir la section \ref{secreceptacle}}
 
-* systemeReceptacle : cf MdE: Réceptacle
+    \EMActor{balance}{}
+    \begin{EMUCActor}{}
+        \EMOperation{PoidActuel(n)}{}{}
+    \end{EMUCActor}
 
-* balance :
-   * PoidActuel(n):
-
-* timer :
-   * expirationTimer(idTimer):
-   * enclenchementTimer(timer):
+    \EMActor{timer}{}
+    \begin{EMUCActor}{}
+        \EMOperation{expirationTimer(idTimer)}{}{}
+        \EMOperation{enclenchementTimer(timer)}{}{}{}
+    \end{EMUCActor}
+\end{EM}
