@@ -1,7 +1,23 @@
 \input{../entete}
+
+\newcommand{\InputPM}[2]{
+    \section{#2}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{images/#1}
+        \caption{Schéma du modèle de protocole de "#2"}
+    \end{figure}
+}
+
 \begin{document}
 
-\Document{Nom du document}
-%\input{partials/}
+\Document{Modèles de protocole}
+
+\InputPM{balance}{Balance}
+\InputPM{drone}{Drone}
+\InputPM{receptacle}{Réceptacle}
+\InputPM{ronde}{Sous-système Ronde}
+\InputPM{web}{Système Web}
 
 \end{document}
