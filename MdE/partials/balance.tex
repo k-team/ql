@@ -1,6 +1,6 @@
 \begin{EM}{Système balance}
     \EMActor{Système Web}{Contrôleur principal côté client.}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Utilisateur}
     \EMOperation{configBal(Seuil, Quantité)}{Demande de configuration du seuil de
         quantité minimale $Seuil$ et de la quantité de produit à racheter
         $Quantité$.}{}
@@ -22,7 +22,7 @@
     \end{EMUCActor}
 
     \EMActor{Système externe}{Contrôleur principal côté client.}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Système web}
     \EMOperation{scan()}{Demande d'identification de la part d'un contrôleur
         externe (liaison entre les deux toujours pas établie). Répond par une
         confirmation si la clé du système balance correspond à celui du
@@ -32,7 +32,7 @@
     \end{EMUCActor}
 
     \EMActor{Capteur Balance}{Capteur mesurant le poids.}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Système Balance}
     \EMOperation{demandeMesure()}{Demande au capteur de fournir la valeur de la
         mesure.}{}
     \EMOperation{mesure()}{Le capteur renvoie la valeur de la mesure. La balance la
