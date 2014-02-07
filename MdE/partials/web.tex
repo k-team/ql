@@ -1,16 +1,20 @@
 \EMName{Système Web}
 
-\EMActor{BtnAssignBalance}{Un bouton pour assigner un produit à une balance existante.}
+\EMActor{BtnAssignBalance}{Un bouton pour assigner un produit à une balance
+    existante.}
 \begin{EMUCActor}{L'utilisateur}
-    \EMOperation{assignBal(bal, art, seuil, qte)}{Le bouton a été activé pour la balance $bal$ avec l'article art et comme configuration le couple (seuil, qte) qui sont respectivement le seuil et la quantité.}{}
+    \EMOperation{assignBal(bal, art, seuil, qte)}{Le bouton a été activé pour
+        la balance $bal$ avec l'article $art$ et comme configuration le couple
+        $(seuil, qte)$, respectivement le seuil et la quantité.}{}
 \end{EMUCActor}
 
 \EMActor{BtnConfigBalance}{Un bouton pour configurer une balance}
 \begin{EMUCActor}{L'utilisateur}
-    \EMOperation{configBal(bal, seuil, qte)}{Le bouton a été activé pour la balance $bal$ avec la configuration $(seuil, qte)$.}{}
+    \EMOperation{configBal(bal, seuil, qte)}{Le bouton a été activé pour la
+        balance $bal$ avec la configuration $(seuil, qte)$.}{}
 \end{EMUCActor}
 
-\EMActor{BtnScan}{Un bouton pour identifier les balances associé au client}
+\EMActor{BtnScan}{Un bouton pour identifier les balances associées au client}
 \begin{EMUCActor}{L'utilisateur}
     \EMOperation{scan()}{Demande d'identification de la part d'un contrôleur externe (liaison entre les deux toujours pas établie). Répond par une confirmation si la clé du système balance correspond à celui du contrôleur.}{}
 \end{EMUCActor}
