@@ -9,11 +9,13 @@
 }
 
 \newcommand{\EMActor}[2]{
-    \subsection{Acteur : #1} #2
+    \subsection{#1} #2
 }
 
 \newenvironment{EMUCActor}[1]{
-    \subsubsection{Acteur du CdU : #1}
+    ~\\
+
+    \textbf{Acteur du CdU : #1}
     \begin{itemize}
 }{
     \end{itemize}
@@ -27,9 +29,10 @@
 \begin{document}
 
 \Document{Modèles de l'environnement}
-%\InputEM{balance}
-%\InputEM{drone}
-%\InputEM{receptacle}
+
+\InputEM{balance}
+\InputEM{drone}
+\InputEM{receptacle}
 \InputEM{ronde}
 \InputEM{web}
 
