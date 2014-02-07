@@ -3,7 +3,7 @@
 LATEX=pdflatex
 BUILD=dist
 
-rm -rf $BUILD && mkdir $BUILD
+mkdir -p $BUILD && rm -f $BUILD/*.pdf
 cd CdU && $LATEX cdu.tex && $LATEX cdu.tex && cp cdu.pdf ../$BUILD ; cd ..
 cd MdC && $LATEX mdc.tex && $LATEX mdc.tex && cp mdc.pdf ../$BUILD ; cd ..
 cd MdE && $LATEX mde.tex && $LATEX mde.tex && cp mde.pdf ../$BUILD ; cd ..
