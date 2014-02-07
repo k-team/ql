@@ -1,0 +1,33 @@
+﻿\begin{UseCase}{Obtention de la valeur d’une mesure d’un capteur balance}
+
+    \UseCaseActor{Système balance}
+
+    \UseCaseContext{Le système balance souhaite récupérer la valeur de la
+        mesure de son capteur balance toute les 1 minute. Il envoie donc des
+        demandes à son capteur et attend la réponse.}
+
+    \begin{UseCasePre}
+        Aucune.
+    \end{UseCasePre}
+
+    \begin{UseCasePost}
+        \begin{enumerate}
+            \item Le système balance à une nouvelle mesure du capteur balance.
+        \end{enumerate}
+    \end{UseCasePost}
+
+\begin{UseCaseScenario}
+    \begin{enumerate}
+        \item Le système balance attend 1 minute.
+        \item Le système balance envoi une requête à son capteur balance pour
+            récupérer la valeur de la mesure.
+        \item Le système balance récupère la valeur de la mesure et remplace
+            son ancienne valeur par la nouvelle filtrée.
+    \end{enumerate}
+\end{UseCaseScenario}
+
+    \begin{UseCaseExtension}
+        Aucune.
+    \end{UseCaseExtension}
+
+\end{UseCase}

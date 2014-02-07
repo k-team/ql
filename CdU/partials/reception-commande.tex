@@ -1,0 +1,64 @@
+﻿\begin{UseCase}{Réception d'une commande}
+
+\UseCaseActor{Utilisateur}
+
+\UseCaseContext{L'utilisateur a effectué une commande. La commande a été livrée et
+    l'utilisateur a reçu une signalisation de commande reçue. Il veut
+    récupérer la/les commandes se trouvant dans le réceptacle.}
+
+\begin{UseCasePre}
+    \begin{enumerate}
+        \item Le réceptacle n'est pas vide et est fermé.
+    \end{enumerate}
+\end{UseCasePre}
+
+\begin{UseCasePost}
+    \begin{enumerate}
+        \item Le réceptacle est vide et fermé.
+    \end{enumerate}
+\end{UseCasePost}
+
+\begin{UseCaseScenario}
+    \begin{enumerate}
+        \item L'utilisateur présente son badge devant le capteur.
+        \item Le réceptacle débloque l'ouverture du panneau latéral.
+        \item L'utilisateur ouvre le panneau latéral.
+        \item L'utilisateur vide le réceptacle.
+        \item L'utilisateur referme le panneau latéral.
+        \item Le réceptacle bloque le panneau latéral.
+        \item L'utilisateur vérifie que le contenu du colis est correct.
+    \end{enumerate}
+\end{UseCaseScenario}
+
+\begin{UseCaseExtension}
+    \begin{enumerate}
+        \item[1a] L'utilisateur a perdu son badge :
+            \begin{enumerate}
+                \item L'utilisateur saisie son code confidentiel pour ouvrir le
+                    réceptacle.
+                \item Retour à l'étape 2 du scénario.
+            \end{enumerate}
+        \item[1b] Le badge/code ne correspond pas :
+            \begin{enumerate}
+                \item Un message s'affiche sur l'écran du réceptacle.
+                \item Retour à l'étape 1 du scénario.
+            \end{enumerate}
+        \item[2a] Le panneau latéral de se débloque pas :
+            \begin{enumerate}
+                \item L'utilisateur contacte le service technique pour demander
+                    une intervention.
+            \end{enumerate}
+        \item[6a] Le panneau latéral ne se bloque pas :
+            \begin{enumerate}
+                \item L'utilisateur contacte le service technique pour demander
+                    une intervention.
+            \end{enumerate}
+        \item[7a] Le contenu du colis ne correspond pas à la commande :
+            \begin{enumerate}
+                \item L'utilisateur contacte le service après vente pour régler
+                    le problème.
+            \end{enumerate}
+    \end{enumerate}
+\end{UseCaseExtension}
+
+\end{UseCase}

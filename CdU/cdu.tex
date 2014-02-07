@@ -1,0 +1,68 @@
+\input{../entete}
+
+\newcommand{\UseCaseInput}[1]{
+    \def \UseCaseLabel {sec:#1}
+    \input{Use Cases/partials/#1}
+}
+
+\newenvironment{UseCase}[1]{
+    \section{#1}
+    \label{\UseCaseLabel}
+    \setlength{\parindent}{0cm}
+}
+
+\newcommand{\UseCaseEntry}[2]{\textbf{#1} #2}
+
+\newcommand{\UseCaseActor}[1]{\UseCaseEntry{Acteur principal :}{#1} \\}
+\newcommand{\UseCaseContext}[1]{\UseCaseEntry{Contexte : \\}{#1} \\}
+
+\newenvironment{UseCaseList}[1]{
+    \UseCaseEntry{#1}{}
+    \setenumerate[1]{label={\arabic*.}}
+    \setenumerate[2]{label={\arabic*.}}
+}{
+}
+\newenvironment{UseCasePre}{\begin{UseCaseList}{Pré-condition(s) :}}{\end{UseCaseList}}
+\newenvironment{UseCasePost}{\begin{UseCaseList}{Post-condition(s) :}}{\end{UseCaseList}}
+\newenvironment{UseCaseScenario}{\begin{UseCaseList}{Scénario Principal :}}{\end{UseCaseList}}
+
+\newenvironment{UseCaseExtension}{
+    \begin{UseCaseList}{Extensions :}
+}{
+    \end{UseCaseList}
+}
+
+\newcommand{\MakeUseCase}[6]{
+    \begin{UseCase}
+        \UseCaseActor{#1}
+        \UseCaseContext{#2}
+        \begin{UseCasePre}
+            #3
+        \end{UseCasePre}
+        \begin{UseCasePost}
+            #4
+        \end{UseCasePost}
+        \begin{UseCaseScenario}
+            #5
+        \end{UseCaseScenario}
+        \begin{UseCaseExtension}
+            #6
+        \end{UseCaseExtension}
+    \end{UseCase}
+}
+
+\begin{document}
+
+\Document{Cas d'Utilisation}
+\UseCaseInput{reception-commande}
+\UseCaseInput{valider-commande}
+\UseCaseInput{installation-balance}
+\UseCaseInput{assigner-produit-balance}
+\UseCaseInput{modifier-param-balance}
+\UseCaseInput{obtenir-mesure}
+\UseCaseInput{maj-commande}
+\UseCaseInput{livrer-tournee}
+\UseCaseInput{deposer-commande}
+\UseCaseInput{superviser-ronde}
+
+\end{document}

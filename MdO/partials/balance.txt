@@ -1,0 +1,62 @@
+﻿Modèle des opérations : Système Balance
+
+
+Opération : SystemeBalance::demandeMesure()
+Acteur du MdE :CapteurBalance
+CdU : Obtenir Mesure
+Messages : 
+* CapteurBalance::{mesure}
+Pré : 
+Post :
+if self.assign != None then
+self.mesure = 0.8 * self.mesure + 0.2 * mesure
+if self.mesure < self.seuilMin then
+        self.SystèmeWeb^alarm(self.quantite)
+wait(1 minute)
+self.demandeMesure()
+
+
+Opération : SystemeBalance::scan()
+Acteur du MdE :Système externe
+CdU : Installation balance
+Messages : 
+* SystèmeExterne::{scan(clé)}
+Pré :
+Post :
+if self.cléClient = clé then
+sender^confirmScan
+self.synchro = True
+self.SystèmeWeb = sender
+
+
+Opération : SystemeBalance::assignBal()
+Acteur du MdE : Système web
+CdU : Assigner un produit à une balance
+Messages : 
+* SystèmeWeb::{assignBal(Prod, Seuil, Quantité)}
+Pré : self.synchro = True
+Post : sender = self.SystèmeWeb
+if Seuil >= 0 and Quantité > 0 then
+self.assign = Prod
+self.seuilMin = Seuil
+self.quantite = Quantité and
+self.mesure = 0
+sender^confirmAssign
+else
+        sender^errorAssign
+
+
+Opération : SystemeBalance::configBal()
+Acteur du MdE : Système web
+CdU : Modifier un paramètre d’une balance
+Messages : 
+* SystèmeWeb::{configBal(Seuil, Quantité)}
+Pré : self.synchro = True and self.produit != None
+Post : 
+if Seuil >= 0 and Quantité > 0 then
+self.seuilMin = Seuil
+and self.quantite = Quantité and
+self.mesure = 0
+sender^confirmConfig
+else
+        sender^errorConfig

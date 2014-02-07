@@ -1,0 +1,149 @@
+﻿Modèle des opérations : Receptacle
+
+
+Opération : Receptacle::rentrerCode(n:number)
+CdU : Réception d’une commande
+Pré :
+Post :
+if n = self.codeAdmin then
+self.mode = EnumMode::Admin
+and
+self.porteLaterale^debloquerPorte()
+and
+self.panneauAffichage^msgModifierCode(true)
+and
+self.diode^diodeVerte() 
+
+
+else if n = self.codeUser then 
+self.mode = EnumMode::User
+and
+self.porteLaterale^debloquerPorte()
+and
+self.panneauAffichage^msgModifierCode(true)
+and
+self.diode^diodeVerte()
+else
+self.panneauAffichage^msgCodeIncorrect(true)
+and
+self.diode^diodeRouge()
+        
+
+
+Opération : Receptacle::modifierCode(n:number)
+CdU : Réception d’une commande
+Pré :        
+not(self.porteLaterale.closedState)
+Post :
+        if self.mode == EnumMode::Admin then
+                self.codeAdmin = n
+and
+self.panneauAffichage^msgModifierCode(false)
+        if self.mode == EnumMode::User then
+                self.codeUser = n
+and
+self.panneauAffichage^msgModifierCode(false)
+
+
+                
+                
+
+
+Opération : Receptacle::verificationBadge(b:badge)
+CdU : Réception d’une commande
+Pré :
+Post : 
+if b == self.idBadgeAdmin then
+self.mode = EnumMode::Admin
+and
+self.porteLaterale^debloquerPorte()
+and
+self.panneauAffichage^msgModifierCode(true)
+and
+self.diode^diodeVerte() 
+else if b == self.idBadgeUser then 
+self.mode = EnumMode::User
+and
+self.porteLaterale^debloquerPorte()
+and
+self.panneauAffichage^msgModifierCode(true)
+and
+self.diode^diodeVerte()
+else
+self.panneauAffichage^msgBadgeIncorrect(true)
+and
+self.diode^diodeRouge()
+        
+
+
+Opération : Receptacle::verificationColis(idDestinataire:IdRFID)
+CdU : Livrer une commande
+Pré :
+Post :
+        if self.id == idDestinataire then
+                self.systemeDrone^colisCorrect(true)
+        else
+                self.systemeDrone^colisCorrect(false)
+
+
+Opération : Receptacle::ouverturePanneau()
+CdU : Livrer une commande
+Pré : not(self.panneauSuperieur.lockedState)
+Post :
+        if self.panneauSuperieur^ouvrirPanneau() then
+                self.panneauSuperieur.closedState = false
+                and
+                self.systemeDrone^sendConfirmation(ConfirmMsg::PanneauOuvert)
+        
+                
+
+
+Opération : Receptacle::fermeturePanneau()
+CdU : Livrer une commande
+Pré : not(self.panneauSuperieur.lockedState)
+Post :
+        if self.panneauSuperieur^fermerPanneau() then
+                self.panneauSuperieur.closedState = true
+                and
+                self.systemeDrone^sendConfirmation(ConfirmMsg::PanneauFerme)
+
+
+Opération : Receptacle::timeoutVerification()
+CdU : Livrer une commande
+Pré :
+Post :
+        self.panneauAffichage^msgHorsService(true)
+
+
+Opération : Receptacle::dronePresent()
+CdU : Livrer une commande
+Pré : not(self.supportDrone.lockedState)
+Post :
+        self.supportDrone^bloquerDrone(true)
+        and
+        self.supportDrone.lockedState = true
+
+
+Opération : Receptacle::porteFerme()
+CdU : Livrer une commande
+Pré :
+Post :
+        self.porteLaterale^bloquerporte()
+        and
+        self.porteLaterale.lockedState = true
+
+
+Opération : Receptacle::panneauFerme()
+CdU : Livrer une commande
+Pré :
+Post :
+        self.panneauSuperieur^bloquerPanneau()
+        and
+        self.panneauSuperieur.lockedState = true
+
+
+Opération : Receptacle::colisPresent()
+CdU : Livrer une commande
+Pré :
+Post :
+        Self.systemeClient^signalerReception()

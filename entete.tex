@@ -1,0 +1,50 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[utf8x]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+% Format du document
+%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage[top = 1.25cm, bottom = 1.25cm, left=2.5cm, right=2.5cm]{geometry}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\Document}[1]{
+    \begin{titlepage}
+        % Titre
+        \vspace*{\fill}
+        \centering
+        \HRule \\[0.4cm]
+        {\huge \bfseries Projet Qualité Logicielle : \\ #1}
+        \HRule \\[1.5cm]
+
+        % Auteurs
+        \begin{minipage}{0.8\textwidth}
+            \centering
+            \large
+            Équipe H4314 -- \today
+        \end{minipage}
+
+        \vfill
+
+        \flushleft
+        \small
+        {\bfseries Chef de projet} \\
+        Jean-Marie COMETS \\[0.5cm]
+
+        {\bfseries Membres de l'équipe} \\
+        Franck MPEMBA BONI: responsable qualité \\
+        Pierre TURPIN \\
+        Samuel CARENSAC \\
+        Grégoire CATTAN \\
+        Van PHAN HAU \\
+        Iler VIRARAGAVANE
+    \end{titlepage}
+
+    \tableofcontents
+    \newpage
+}

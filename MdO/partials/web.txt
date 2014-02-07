@@ -1,0 +1,197 @@
+﻿Modèle des opérations : sous-système SystèmeWeb
+
+
+
+
+
+
+Opération : SystèmeWeb::voirCommande()
+Acteur du MdE :BtnVoirCommande
+CdU : Valider une commande
+Messages : 
+* PanneauInformation::{afficherCommande, afficherFacture, produitNonDispo}
+Pré :
+Post : 
+        if not(self.commande.estCommandeVide) then
+                self.panneauInformation^afficherCommande(self.commande) 
+and
+                self.panneauInformation^afficherFacture(self.commande, 
+self.commande.prixTotal) 
+and
+                self.commande.estCommandeValidée = false 
+and
+                if not(self.commande.article.estDisponible) then
+                        self.panneauInformation^produitNonDispo( self.commande.article, true)
+                else
+                        self.panneauInformation^produitNonDispo( self.commande.article, false)
+
+
+
+
+Opération : SystèmeWeb::alarm(art:Article, qte:Quantité)
+Acteur du MdE : SystèmeBalance
+CdU : MAJ d’une commande
+Messages :
+* PanneauInformation::{produitNonDispo} 
+* ListeCommande::{majCommande}
+Pré :
+Post :  
+        if art.estDisponible then
+                if self.commande.estCommandeVide then
+                        self.commande.estCommandeVide = false 
+and
+self.commande.article = art 
+and
+self.commande.prixTotal = art.prixArticle * qte
+                else
+                        if art == self.commande.article then 
+                                self.commande.article.estDisponible = true 
+and 
+                                self.panneauInformation^produitNonDispo( 
+self.commande.article, false) 
+and
+                                self.commande.article.qteArticle = 
+self.commande.article.qteArticle@pre + qte
+                        and
+self.commande.prixTotal = self.commande.prixTotal@pre + 
+art.prixArticle * qte
+                        and
+                        self.commande.estCommandeVide = false
+                and
+                self.commande^majCommande()
+        else
+                if self.commande.estCommandeVide then
+                        self.panneauInformation^produitNonDispo(art, true)
+                else
+if art == self.article then 
+        self.commande.article.estDisponible = false 
+and
+                                self.panneauInformation^produitNonDispo(
+self.commande.article, true)
+                and
+                self.commande^majCommande()
+        
+
+
+Opération : SystèmeWeb::produitNonStock(art : Article)
+Acteur du MdE : InterfaceCatalogue
+CdU : MAJ d’une commande
+Messages :
+* PanneauInformation::{produitNonDispo} 
+Pré :
+Post :  
+        if self.commande.article == art then
+                self.commande.article.estDisponible = false 
+and
+                self.panneauInformation^produitNonDispo(self.commande.article, true)
+
+
+
+
+Opération : SystèmeWeb::validerCommande()
+Acteur du MdE : BtnValiderCommande
+CdU : Valider une commande
+Messages : 
+* PanneauInformation::{afficherCommande, afficherFacture, commandeValidée}
+* ListeCommande::{majCommande}
+Pré :
+Post :  
+if not(self.commande.estCommandeVide) then
+        self.panneauInformation^afficherCommande(self.commande) 
+and
+self.panneauInformation^afficherFacture(self.commande, 
+self.commande.prixTotal) 
+and
+                self.commande.estCommandeValidée = true 
+and 
+                self.panneauInformation^commandeValidée(true) 
+and
+                self.commande^majCommande()
+        else 
+                self.panneauInformation^commandeValidée(false)
+
+
+
+
+Opération : SystèmeWeb::changerQuantité(art:Article, qte:Quantité)
+Acteur du MdE : ListeCommande  
+CdU : Valider une commande
+Messages : 
+* PanneauInformation::{afficherCommande, commandeValidée}
+* ListeCommande::{majCommande}
+Pré :
+Post :  
+if not(self.commande.estCommandeVide) then
+                self.panneauInformation^afficherCommande(self.commande) 
+and
+                self.panneauInformation^commandeValidée(false) 
+and
+                if art==self.commande.article then
+                        self.commande.prixTotal = self.commande.prixTotal@pre + (qte - 
+self.commande.article.qteArticle) * art.prixArticle
+and
+                        self.commande.article.qteArticle =qte
+                and 
+                self.commande^majCommande()
+                
+
+
+Opération : SystèmeWeb::estArticleCoché(art:Article)
+Acteur du MdE : NavigateurWeb
+CdU : Valider une commande
+Messages : 
+* PanneauInformation::{afficherCommande, commandeValidée}
+* ListeCommande::{majCommande}
+Pré :
+Post :  
+if not(self.commande.estCommandeVide) then
+                self.panneauInformation^afficherCommande(self.commande) 
+and
+                self.panneauInformation^commandeValidée(false) 
+and
+                if art==self.commande.article then
+                        if self.commande.article.estCoché then
+                                self.commande.article.estCoché = false
+                                self.commande.prixTotal = self.commande.prixTotal@pre - 
+self.commande.article.qteArticle * art.prixArticle
+                        else 
+                                self.commande.article.estCoché = true
+                                self.commande.prixTotal = self.commande.prixTotal@pre + 
+self.commande.article.qteArticle * art.prixArticle
+                        and 
+                        self.commande^majCommande()
+
+
+
+
+Opération : SystèmeWeb::configBal(bal:Balance, seuil:Seuil, qte:Quantité)
+Acteur du MdE : BtnConfigBalance 
+CdU : Configurer les balances
+Messages : 
+* PanneauInformation::{confirmConfigBal, erreurConfigBal}
+Pré :
+Post :  
+        if bal==self.balance then
+                if seuil <= 0 then
+                        if qte <=0 then
+                                self.panneau.information^erreurConfigBal()
+        else
+                self.panneauInformation^confirmConfigBal()
+
+
+Opération : SystèmeWeb::assignBal(bal:Balance, art:Article, seuil:Seuil, qte:Quantité)
+Acteur du MdE : BtnAssignBalance 
+CdU : Configurer les balances
+Messages :
+* PanneauInformation::{afficherBalance, confirmAssignBal, erreurAssignBal}
+Pré :
+Post : 
+        self.panneauInformation^afficherBalance(bal)
+and
+        if bal==Null then
+                if art == self.commande.article then
+                        if seuil <= 0 then
+                                if qte <=0 then
+                                        self.panneau.information^erreurAssignBal()
+        else
+                self.panneauInformation^confirmAssignBal()

@@ -1,0 +1,52 @@
+ \begin{UseCase}{Superviser le système ronde}
+    \UseCaseActor{Le superviseur}
+
+    \UseCaseContext{Le superviseur veut suivre les tournées en cours.}
+
+    \begin{UseCasePre}
+        \begin{enumerate}
+            \item Au moins une tournée est en préparation.
+        \end{enumerate}
+    \end{UseCasePre}
+
+    \begin{UseCasePost}
+        \begin{enumerate}
+            \item Les informations sur les tournées et les drones
+                sont affichées.
+        \end{enumerate}
+    \end{UseCasePost}
+
+\begin{UseCaseScenario}
+        \begin{enumerate}
+            \item Le superviseur se connecte à l’ application
+            \item Au choix :
+                \begin{itemize}
+                    \item Il clique sur “visualiser tournées”
+                        \begin{enumerate}
+                            \item Le système affiche les tournées en
+                                préparation sur l’écran de visualisation
+                        \end{enumerate}
+                    \item Il clique sur “visualiser drone”
+                        \begin{enumerate}
+                            \item Le système affiche l'avancement des
+                                drones sur les tournée, ainsi que leur état.
+                                Les drones en fonctionnement normal
+                                sont affiché en bleu les autres en rouge.
+                        \end{enumerate}
+                    \item Il clique sur “consulter la boite mail”
+                        \begin{enumerate}
+                            \item Le système affiche l’ensemble des message
+                                d’erreur envoyé par les drones qui livre une tournée
+                            \item Le superviseur prend des décisions (envoie
+                                d’une équipe de secours par exemple), supprime
+                                ou archive les messages.
+                        \end{enumerate}
+                \end{itemize}
+        \end{enumerate}
+\end{UseCaseScenario}
+
+\begin{UseCaseExtension}
+    Aucune.
+\end{UseCaseExtension}
+
+ \end{UseCase}

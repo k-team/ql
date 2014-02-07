@@ -1,0 +1,113 @@
+﻿\begin{UseCase}{Déposer une commande}
+
+\UseCaseActor{Drone}
+
+\UseCaseContext{L'entrepot prévoit une tournée suivant les livraisons a
+    réaliser. Le drone se déplace sur le réseau de la ville puis hors du réseau
+    jusqu'au réceptacle des clients a livrer. Le drone doit déposer le colis
+    dans le réceptacle du client. Le drone doit ensuite aller en direction du
+    client suivant.}
+
+\begin{UseCasePre}
+    \begin{enumerate}
+        \item Le drone se trouve a proximité du réceptacle du client a livrer
+            (donc le paquet du client est le premier sur le tapis roulant).
+    \end{enumerate}
+\end{UseCasePre}
+
+\begin{UseCasePost}
+    \begin{enumerate}
+        \item La commande doit se trouver dans le réceptacle du client.
+    \end{enumerate}
+\end{UseCasePost}
+
+\begin{UseCaseScenario}
+    \begin{enumerate}
+        \item Le drone se pose sur le réceptacle client.
+        \item Le drone communique avec le réceptacle pour vérifier que celui-ci
+            n'est pas plein.
+        \item Le drone vérifie que le prochain colis correspond bien à ce
+            réceptacle.
+        \item Le drone demande l'ouverture du réceptacle.
+        \item Le réceptacle s'ouvre, puis confirme au drone.
+        \item Le drone ouvre la trappe pour déposer le colis.
+        \item Le tapis roulant s'active et fait tomber le colis dans le
+            réceptacle.
+        \item Le drone referme la trappe.
+        \item Le drone demande la fermeture du réceptaclebien.
+        \item Le réceptacle se ferme, puis signale le drone.
+        \item le drone vérifie que le poid la diminution du poid porté
+            correspond à la commande.
+        \item Le réceptacle envoie un SMS au client pour signaler l'arrivée
+            d'une livraison.
+        \item Le drone signale à l'entrepot la validation de la livraison.
+        \item le drone décolle et part en direction de la prochaine livraison.
+    \end{enumerate}
+\end{UseCaseScenario}
+
+\begin{UseCaseExtension}
+    \begin{enumerate}
+        \item[2.a] Le réceptacle est plein :
+            \begin{enumerate}
+                \item Le drone signale le problème à l'entrepot.
+                \item Le réceptacle envoie un message d'information au client
+                    (mail, alerte sur le logiciel et SMS).
+                \item Reprise du scénario à l'étape 13.
+            \end{enumerate}
+        \item[3.a] Le prochain colis ne correspond pas à ce réceptacle :
+            \begin{enumerate}
+                \item Le drone vérifie la présence d'un colis correspondant à
+                    ce réceptacle.
+                \item Avancement du tapis roulant jusqu'à ce que le colis soit
+                    à la bonne position.
+                \item Reprise du scénario à l'étape 4.
+            \end{enumerate}
+        \item[3.b].1 Il n'y a pas de colis correspondant à ce réceptacle :
+            \begin{enumerate}
+                \item Le drone signale l'anomalie à l'entrepot.
+                \item Reprise du scénario à l'étape 13.
+            \end{enumerate}
+        \item[5.a] Le réceptacle ne peut pas s'ouvrir :
+            \begin{enumerate}
+                \item Le drone signale le problème à l'entrepot.
+                \item Reprise du scénario à l'étape 13.
+            \end{enumerate}
+        \item[6.a] Le drone n'arrive pas à ouvrir la trappe :
+            \begin{enumerate}
+                \item Étapes 9 à 10 du scénario.
+                \item Le drone signale le problème à l'entrepot.
+                \item Le drone décolle et retourne à l'entrepot.
+            \end{enumerate}
+        \item[7.a] Le tapis roulant ne marche pas :
+            \begin{enumerate}
+                \item Étapes 8 à 10 du scénario.
+                \item Le drone signale le problème à l'entrepot.
+                \item Le drone décolle et retourne à l'entrepot.
+            \end{enumerate}
+        \item[8.a] La trappe ne se referme pas :
+            \begin{enumerate}
+                \item Fermeture trappe de secours.
+                \item Étapes 9 à 10 du scénario.
+                \item Le drone envoie une demande de maintenance d'urgence à
+                    l'entrepot.
+                \item Un technicien est déployé pour effectuer les réparations.
+                \item Reprise à l'étape 2 du scénario.
+            \end{enumerate}
+        \item[10.a] Le réceptacle ne se ferme pas :
+            \begin{enumerate}
+                \item Le drone envoie une demande de maintenance d'urgence à
+                    l'entrepot.
+                \item Un technicien est déployé pour effectuer les réparations.
+                \item Reprise à l'étape 11 du scénario.
+            \end{enumerate}
+        \item[11.a] La différence de poid relevée ne correspond pas au poids
+            prévu
+            de la commande :
+            \begin{enumerate}
+                \item Le drone signale l'anomalie à l'entrepot.
+                \item Reprise à l'étape 12 du scénario.
+            \end{enumerate}
+    \end{enumerate}
+\end{UseCaseExtension}
+
+\end{UseCase}

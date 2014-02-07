@@ -1,0 +1,92 @@
+﻿\begin{UseCase}{Mise à jour d'une commande}
+
+\UseCaseActor{Système client}
+
+\UseCaseContext{Quand le système client reçoit une notification de la part
+    d'une balance, signalant le manque du produit qui lui est associé, il
+    vérifie la disponibilité en stock du produit. Il affecte ensuite ce produit
+    à la liste de commandes courante du client. Il signale la commande à
+    l'utilisateur pour être validée via une notification.}
+
+\begin{UseCasePre}
+    \begin{enumerate}
+        \item Le système est bien initialisé avec les balances configurées par
+            l'utilisateur (voir cas d'utilisation :
+            \ref{sec:assigner-produit-balance}).
+    \end{enumerate}
+\end{UseCasePre}
+
+\begin{UseCasePost}
+    \begin{enumerate}
+        \item Les produits affectés à la liste de commande sont en attente de
+            validation par l'utilisateur.
+    \end{enumerate}
+\end{UseCasePost}
+
+\begin{UseCaseScenario}
+    \begin{enumerate}
+        \item L'utilisateur consomme des produits et les quantités descendent
+            en dessous des seuils associés.
+        \item Les balances associées préviennent le système client de la manque
+            en produits. Cette étape peut être répétee plusieurs fois.
+        \item Le système client vérifie les produits signalés avec la
+            disponibilité des produits en stock. Le système client peut répéter
+            cette étape plusieurs fois.
+        \item Le système client ajoute les produits à la liste de commande de
+            l'utilisateur. Le système client peut répéter cette étape plusieurs
+            fois.
+        \item Le système client notifie l'utilisateur de la mise à jour de la
+            commande.
+    \end{enumerate}
+\end{UseCaseScenario}
+
+\begin{UseCaseExtension}
+    \begin{enumerate}
+        \item[1.a] Aucun seuil n'est fixé :
+            \begin{enumerate}
+                \item Le système client notifie l'utilisateur du problème.
+                \item L'utilisateur fixe le seuil des balances associées aux
+                    produits : le scénario se termine par un échec \textit{OU}
+                    reprendre le scénario à l'étape 1.
+            \end{enumerate}
+        \item[1.b] Les balances sont défectueuses :
+            \begin{enumerate}
+                \item Le système client notifie l'utilisateur du problème.
+                \item L'utilisateur prend contact avec l'entreprise.
+                \item Les balances sont réparées et réinitialisées : le
+                    scénario se termine par un échec \textit{OU} reprendre le
+                    scénario à l'étape 1.
+            \end{enumerate}
+        \item[2.a] Aucun signal n'est envoyé au système client :
+            \begin{enumerate}
+                \item L'utilisateur prend contact avec l'entreprise.
+                \item Les balances sont réparées et réinitialisées : le
+                    scénario se termine par un échec \textit{OU} reprendre le
+                    scénario à l'étape 1.
+            \end{enumerate}
+        \item[3.a] Le produit n'est pas disponible :
+            \begin{enumerate}
+                \item Le système client notifie l'utilisateur que les articles
+                    ne sont pas en stock.
+                \item Le scénario continue à l'étape 4.
+            \end{enumerate}
+        \item[4.a] Ajout multiple du même produit (envoi continu d'un signal) :
+            \begin{enumerate}
+                \item Le système client notifie l'utilisateur de l'anomalie si
+                    le nombre de signaux émis par la balance est supérieur à
+                    \textit{10}.
+                \item L'utilisateur modifie manuellement la commande.
+                \item La commande est mise à jour.
+                \item Le scénario continue à l'étape 5.
+            \end{enumerate}
+        \item[5.a] Aucune notification de commande n'a été reçue :
+            \begin{enumerate}
+                \item Attendre un délai de 10 à 20 minutes.
+                \item Passé ce délai, l'utilisateur prend contact avec
+                    l'entreprise et l'informe du problème.
+                \item Attendre une nouvelle notification du système client.
+            \end{enumerate}
+    \end{enumerate}
+\end{UseCaseExtension}
+
+\end{UseCase}

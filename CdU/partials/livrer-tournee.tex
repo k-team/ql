@@ -1,0 +1,93 @@
+﻿\begin{UseCase}{Livrer une tournée}
+
+\UseCaseActor{Ronde, Drone}
+
+\UseCaseContext{Le système recalcule la(les) tournée(s) une fois qu'une
+    commande arrive et la(les) livrer à l'aide des drones.}
+
+\begin{UseCasePre}
+    \begin{enumerate}
+        \item Une demande de livraison a été faite.
+    \end{enumerate}
+\end{UseCasePre}
+
+\begin{UseCasePost}
+    \begin{enumerate}
+        \item Les commandes livrées et un retour de l'état du drone (bon état,
+            mauvais état, drone perdu ...).
+    \end{enumerate}
+\end{UseCasePost}
+
+\begin{UseCaseScenario}
+    \begin{enumerate}
+        \item Le système crée ou recalcule les tournées (tient compte des
+            commandes et des drones disponible).
+        \item Le système calcule un facteur de rentabilité pour chaque tournée.
+            Ce coefficient est calculé en faisant le rapport de la quantité de
+            produit transport sur la capacité du drone.
+        \item Lorsqu'un facteur de rentabilité est supérieur à un chiffre
+            donné (\textbf{80\%} par exemple), la tournée correspondante est livrée :
+            \begin{enumerate}[label={\theenumi\alph*.}]
+                \item Les commandes sont préparées par un agent (humain ou
+                    robotique).
+                \item Elles sont placées dans le drone, par ordre d'arrivé chez
+                    le client.
+                \item Le système envoie le drone.
+                \item Le système attend le retour du drone.
+                \item Le système supprime la tournée correspondant de la liste
+                    de tournées à livrer.
+                \item Revenir à l'étape 1.
+            \end{enumerate}
+        \item Lorsqu'un facteur de rentabilité est inférieur à ce chiffre
+            donné, on place une alarme sur la tournée. Cette alarme prévient le
+            système lorsque une commande de la tournée ne sera pas livrée à
+            temps (délai d'attente fixé, par exemple à \textbf{6h}) si on
+            attend davantage que le coefficient s'améliore.
+    \end{enumerate}
+\end{UseCaseScenario}
+
+\begin{UseCaseExtension}
+    \begin{enumerate}
+        \item[2.a] Il n'y a plus assez de drone. La capacité de chaque drone
+            est dépassée :
+            \begin{enumerate}
+                \item On crée une nouvelle tournée.
+                \item On transfère les commandes de la tournée dépassant la
+                    limite à cette nouvelle tournée. \textit{Répéter tant que
+                        la tournée citée dépasse la capacité du drone.}
+                \item On notifie le client si une de ses commandes ne sera pas
+                    livrée à temps.
+                \item On livre des commandes justifiées en passant à l'étape 3.
+            \end{enumerate}
+        \item[3.a.a] Certains produits ne sont plus disponible en stock pour
+            réaliser une commande :
+            \begin{enumerate}
+                \item On modifie la commande du client en enlevant tous les
+                    articles non disponible.
+                \item On notifie le client que sa commande a dû être modifiée.
+                \item On actualise les stocks.
+                \item On reprend l'exécution du scénario principal en ignorant
+                    les articles non disponible (passer à l'étape 3b).
+            \end{enumerate}
+        \item[3.d.a] Le drone retourne en mauvais état.
+            \begin{enumerate}
+                \item Envoyer ce drone au service technique.
+                \item Créer un fichier log sui sera lu plus tard par un expert.
+            \end{enumerate}
+        \item[3.d.b] Le drone n'est pas revenu, alors qu'il est attendu depuis
+            2h (c'est à dire un temps de livraison beaucoup trop long) :
+            \begin{enumerate}
+                \item Envoyer une équipe à sa recherche en suivant son trajet.
+                \item Si le drone est trouvé, le placer au service technique
+                \item Si le drone n'est pas trouvé, prévenir la police.
+                \item Créer un fichier log qui sera lu plus tard par un expert.
+            \end{enumerate}
+        \item[4.a] Une alarme arrive à expiration :
+            \begin{enumerate}
+                \item On exécute l'étape 3 même si le coefficient de
+                    rentabilité est inférieur au chiffre donné.
+            \end{enumerate}
+    \end{enumerate}
+\end{UseCaseExtension}
+
+\end{UseCase}

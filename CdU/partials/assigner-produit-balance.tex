@@ -1,0 +1,116 @@
+\begin{UseCase}{Assigner un produit à une balance}
+    \UseCaseActor{Utilisateur}
+
+    \UseCaseContext{L'utilisateur veut assigner un produit à acheter à
+        une de ses balance en interagissant avec la vue web.}
+
+    \begin{UseCasePre}
+        \begin{enumerate}
+            \item Le système contrôleur est correctement initialisé.
+            \item Le système web est lancé et la vue web correspondante est
+                accessible au client.
+            \item Les systèmes balances sont également toutes initialisées : un
+                produit de base,  un seuil de quantité minimale et une quantité de
+                produit à racheter en cas de nécessité initiaux est attribué.
+            \item Le système Ronde est lancé et est accessible par communication
+                (Internet).
+            \item Tous ces systèmes doivent être correctement liés.
+        \end{enumerate}
+    \end{UseCasePre}
+
+    \begin{UseCasePost}
+        \begin{enumerate}
+            \item Le système balance choisi à un nouveau produit assigné avec également
+                des paramètres choisis.
+        \end{enumerate}
+    \end{UseCasePost}
+
+    \begin{UseCaseScenario}
+        \begin{enumerate}
+            \item L'utilisateur choisi une balance à modifier.
+            \item Le système web question le système Ronde afin d'obtenir la
+                liste des produits du catalogue. Le système contrôleur attend
+                la réponse de la part du système Ronde.
+            \item L'utilisateur voit le produit courant assigné à la balance
+                choisi. Il peut modifier cette valeur en naviguant à travers le
+                catalogue de produit.
+            \item L'utilisateur choisi les paramètres de seuil de quantité
+                minimale et la quantité de produit à racheter puis valide la
+                demande.
+            \item Le système web transmet la demande de changement de type de
+                produit au système contrôleur et se prépare à recevoir une
+                réponse.
+            \item Le système contrôleur transmet la demande au système balance
+                correspondant et se prépare à recevoir une réponse.
+            \item Le système balance vérifie l'intégrité de la nouvelle valeur.
+            \item Le système balance modifie son type de produit associé ainsi
+                que ses paramètres.
+            \item Le système balance notifie la réussite au système contrôleur.
+            \item Le système contrôleur notifie la réussite au système web.
+            \item Le système web notifie la réussite à l'utilisateur.
+        \end{enumerate}
+    \end{UseCaseScenario}
+
+    \begin{UseCaseExtension}
+        \begin{enumerate}
+        \item[2.a] Le système web n'a pas de réponse de la part du système Ronde
+            après 5sec :
+            \begin{enumerate}
+                \item Le système web n'essaye plus de recevoir une réponse.
+                \item Le système web notifie l'erreur de transmission à
+                    l'utilisateur. Le CdU reprend à l'étape 1.
+            \end{enumerate}
+
+        \item[4.a] L'utilisateur essaye d'appliquer une ou des valeurs
+            incohérentes (paramètre vide ou non numérique ou inférieur à 0) :
+            \begin{enumerate}
+                \item Le système web ne transmet pas la demande au système
+                    contrôleur.
+                \item Le système web notifie l'erreur à l'utilisateur. Le CdU
+                    reprend l'exécution à l'étape 4.
+            \end{enumerate}
+
+        \item[5.a] Le système web n'arrive pas à transmettre la demande au
+            système contrôleur :
+            \begin{enumerate}
+                \item Le système web notifie l'erreur de transmission à
+                    l'utilisateur. Le CdU reprend à l'étape 2.
+            \end{enumerate}
+
+        \item[5.b] Le système web n'a pas de réponse de la part du système
+            contrôleur après 5sec :
+            \begin{enumerate}
+                \item Le système web n'essaye plus de recevoir une réponse.
+                \item Le système web notifie l'erreur de transmission à
+                    l'utilisateur. Le CdU reprend à l'étape 2.
+            \end{enumerate}
+
+        \item[6.a] Le système contrôleur ne parviens pas à trouver le système de balance correspondant à la demande :
+            \begin{enumerate}
+                \item Le système contrôleur indique au système web que le système balance demandé n'existe pas.
+                \item Le système web notifie l'utilisateur de l'erreur. Le CdU reprend à l'étape 1.
+            \end{enumerate}
+
+        \item[6.b] Le système contrôleur n'arrive pas à transmettre la demande au système balance correspondant :
+            \begin{enumerate}
+                \item Le système contrôleur notifie l'erreur de transmission au système web.
+                \item Le système web transmet l'erreur à l'utilisateur. Le CdU reprend à l'étape 3.
+            \end{enumerate}
+
+        \item[6.c] Le système contrôleur n'a pas de réponse de la part du système balance après 5sec :
+            \begin{enumerate}
+                \item Le système contrôleur n'essaye plus de recevoir une réponse.
+                    Le système contrôleur indique l'erreur au système web.
+                \item Le système web notifie l'erreur de transmission à l'utilisateur. Le CdU reprend à l'étape 3.
+            \end{enumerate}
+
+        \item[7.b] L'intégrité des nouvelles valeurs n'est pas bonne (valeur des paramètres non valide ou supérieur à un maximum définit en fonction du type de produit)
+            \begin{enumerate}
+                \item Le système balance ignore la modification.
+                \item Le système balance transmet l'erreur au système contrôleur.
+                \item Le système contrôleur transmet l'erreur au système web.
+                \item Le système web notifie l'erreur à l'utilisateur. Le CdU reprend à l'étape 3.
+            \end{enumerate}
+        \end{enumerate}
+    \end{UseCaseExtension}
+\end{UseCase}

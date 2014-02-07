@@ -1,0 +1,55 @@
+\EMName{Système Ronde}
+
+\EMActor{ecranSupervision}{Un écran d'affichage où l'on peut visualiser les tournées, leur avancement, et la position des drones qui leur sont rattachés.}
+\begin{EMUCActor}{Superviseur}
+    \EMOperation{visualiserDrone()}{visualise la position des drones sur l'écran, ainsi que leur état (en marche, en alerte)}{Superviser ronde}
+     \EMOperation{visualiserTournee()}{visualise les tournées et leur avancement sur l'écran}{Superviser ronde}
+\end{EMUCActor}
+
+\EMActor{btnVisualiserDrones}{Un bouton de l'interface qui permet d'afficher les drone sur $ecranSupervision$.}
+\begin{EMUCActor}{Superviseur}
+    \EMOperation{cdeVisualiserDrones()}{le bouton a été actionné}{Superviser ronde}
+\end{EMUCActor}
+
+\EMActor{btnVisualiserTournees}{ Un bouton de l'interface qui permet d'afficher les tournées sur $ecranSupervision$.}
+\begin{EMUCActor}{Superviseur}
+    \EMOperation{cdeVisualiserTournees()}{le bouton a été actionné}{Superviser ronde}
+\end{EMUCActor}
+
+\EMActor{boiteMail}{Une application qui gère l'affichage ainsi que le traitement des messages.}
+\begin{EMUCActor}{Superviseur}
+    \EMOperation{envoyerMessage(idDrone, enumMessage)}{le système envoie un message venant d'un drone à la boite mail (quitter entrepôt, en tournée, livraison impossible, alerte, ...)}{Superviseur ronde}
+\end{EMUCActor}
+
+\EMActor{interfaceControleClient}{ L'interface de l'application permettant de receptionner les messages d'un client.}
+\begin{EMUCActor}{Client}
+    \EMOperation{envoyerCommande(Commande)}{envoi d'une commande au système ronde.}{Livrer une tournée}
+    \EMOperation{annulerCommande(Commande)}{demande l'annulation d'une commande.}{Livrer une tournée}
+    \EMOperation{notifieErreur(Message)}{prévient le client que ça demande ne peut être satisfaite (absence de produit demande, annulation survenue trop tard, ...)}{Livrer une tournée}
+\end{EMUCActor}
+
+\EMActor{dronePhysique}{Un drone du système ronde}
+\begin{EMUCActor}{Drone}
+    \EMOperation{signalerPosition(Position)}{envoie des coordonnées gps du drone au système.}{Livrer une tournée}
+    \EMOperation{signalerLivraison(Commande)}{signale au système que la commande numero $Commande$ a bien été livré.}{Déposer une commande}
+    \EMOperation{signalerAnomalie(enum Anomalie)}{signale au système une anomalie (panne, attaque, impossibilité de livrer une commande, ...). Une anomalie $Anomalie$ peut etre declenchée manuellement si elle est constatée par un technicien du système.}{Livrer une tournée}
+    \EMOperation{signalerRetour()}{le drone signale au système qu'il est bien revenu}{Livrer une tournée}
+    \EMOperation{estOperationnel()}{le drone signale au système qu'il est disponible (à l'entrepôt et en bon état)}{Livrer une tournée}
+    \EMOperation{envoyerDrone(Tournee)}{le système demande au drone de commencer une tournée}{Livrer une tournée}
+\end{EMUCActor}
+
+\EMActor{alarme}{Une alarme associé à une tournée, qui prévient le système si la tournée risque de ne pas être livrée à temps.}
+\begin{EMUCActor}{Alarme}
+    \EMOperation{notifierExpiration(Tournee)}{signale au système qu'un élément de la tournée $Tournée$ risque de ne pas être livré à temps si on attend davantage de la livrer}{Livrer une tournée}
+    \EMOperation{creerAlarme(Tournee, Temps)}{le système associe une alarme à une tournée et demande son expiration dans $Temps$ heures.}{Livrer une tournée}
+    \EMOperation{annulerAlarme()}{détruit l'alarme avant qu'elle n'expire}{Livrer une tournée}
+\end{EMUCActor}
+
+\EMActor{BD}{Base de données contient toutes les commandes en cours delivraison ou en attente ainsi que leur tournée correspondante.}
+\begin{EMUCActor}{Ronde}
+    \EMOperation{calculerTournée()}{recalculer les tournées (et éventuellement créer les nouvelles)}{Livrer une tournée}
+    \EMOperation{ajouterCommande(Commande)}{ajouter des nouvelles commandes dans la BD}{Livrer une tournée}
+    \EMOperation{supprimerComande(Commande)}{supprimer des commandes dans la BD}{Livrer une tournée}
+    \EMOperation{majPositionDrone(idDrone, Position)}{}{Livrer une tournée}
+    \EMOperation{majEtatDrone(idDrone, Anormalie)}{}{Livrer une tournée}
+\end{EMUCActor}

@@ -1,0 +1,36 @@
+\input{../entete}
+
+\newcommand{\InputEM}[1]{
+    \input{partials/#1}
+}
+
+\newcommand{\EMName}[1]{
+    \section{#1}
+}
+
+\newcommand{\EMActor}[2]{
+    \subsection{Acteur : #1} #2
+}
+
+\newenvironment{EMUCActor}[1]{
+    \subsubsection{Acteur du CdU : #1}
+    \begin{itemize}
+}{
+    \end{itemize}
+}
+
+\newcommand{\EMOperation}[3]{
+    \item $#1$ : #2 \\
+    CdU concerné : \textit{\ifx&#3&aucun\else#3\fi}
+}
+
+\begin{document}
+
+\Document{Modèles de l'environnement}
+%\InputEM{balance}
+%\InputEM{drone}
+%\InputEM{receptacle}
+\InputEM{ronde}
+\InputEM{web}
+
+\end{document}

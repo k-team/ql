@@ -1,0 +1,46 @@
+﻿MdE: Drone
+
+
+
+
+
+
+* tapisRoulant :
+   * colisPret():
+   * activerTapis(e:boolean):
+
+
+* trappe :
+   * OuvrirTrappe()
+   * FermerTrappe():
+   * ActiverSystUrgence():
+
+
+* systemeRonde :
+   * EnvoyerDrone(itineraire:ItineraireLivraison):
+   * ConfirmationLivraison():
+   *  SignalementErreur(msg:MsgErreur):
+   * SignalerRetour():
+   * EstDisponible(e:boolean):
+
+
+* listeColis :
+   * verificationColisActuel (idColis:IdRFID):
+
+
+* systemeReceptacle : cf MdE : Récepatacle
+
+
+* balance :
+   * PoidActuel(n:number):
+
+
+* timer :
+   * expirationTimer(idTimer:IdTimer):
+   * enclanchementTimer(timer:Timer):
+[a]
+
+
+
+
+[a]ok il manque la description mais bon osef du blabla pr le moment. Elle est pas essencielle j'y reviendrais plus tard

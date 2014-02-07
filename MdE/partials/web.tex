@@ -1,0 +1,58 @@
+\EMName{Système Web}
+
+\EMActor{BtnAssignBalance}{Un bouton pour assigner un produit à une balance existante.}
+\begin{EMUCActor}{L'utilisateur}
+    \EMOperation{assignBal(bal, art, seuil, qte)}{Le bouton a été activé pour la balance $bal$ avec l'article art et comme configuration le couple (seuil, qte) qui sont respectivement le seuil et la quantité.}{}
+\end{EMUCActor}
+
+\EMActor{BtnConfigBalance}{Un bouton pour configurer une balance}
+\begin{EMUCActor}{L'utilisateur}
+    \EMOperation{configBal(bal, seuil, qte)}{Le bouton a été activé pour la balance $bal$ avec la configuration $(seuil, qte)$.}{}
+\end{EMUCActor}
+
+\EMActor{BtnScan}{Un bouton pour identifier les balances associé au client}
+\begin{EMUCActor}{L'utilisateur}
+    \EMOperation{scan()}{Demande d'identification de la part d'un contrôleur externe (liaison entre les deux toujours pas établie). Répond par une confirmation si la clé du système balance correspond à celui du contrôleur.}{}
+\end{EMUCActor}
+
+\EMActor{BtnVoirCommande}{Un bouton pour afficher la liste des commandes courante associée à l'utilisateur.}
+\begin{EMUCActor}{L'utilisateur}
+    \EMOperation{voirCommande()}{Le bouton à été actionné.}{}
+\end{EMUCActor}
+
+\EMActor{BtnValiderCommande}{Un bouton pour valider la liste des commandes courante associée à l'utilisateur.}
+\begin{EMUCActor}{L'utilisateur}
+    \EMOperation{validerCommande()}{Le bouton à été actionné.}{}
+\end{EMUCActor}
+
+\EMActor{InterfaceCatalogue}{Interface client pour ajouter un produit à la liste des commandes de l'utilisateur.}
+\begin{EMUCActor}{L'utilisateur, Controleur}
+    \EMOperation{listeArticle()}{La liste des produits est envoyé au client}{}
+    \EMOperation{produitNonStock(art)}{Un article art n'est plus en stock}{}
+\end{EMUCActor}
+
+\EMActor{SystèmeBalance}{L'interface balance qui notifie le manque en quantité de l'article}
+\begin{EMUCActor}{Balance, Controleur}
+    \EMOperation{alarm(art, qte)}{Une quantité qte est demandé pour l'article associé à la balance afin d'être ajouté à la commande.}{}
+\end{EMUCActor}
+
+\EMActor{ListeCommande}{La liste des commandes de l'utilisateur divisée en articles avec ses caractéristiques.}
+\begin{EMUCActor}{L'utilisateur, Controleur}
+    \EMOperation{estArticleCoché(art)}{Un article art de la liste des commande a été coché ou décoché.}{}
+    \EMOperation{changerQuantité(art, qte)}{Demande de modification de la quantité de l'article art par la quantité qte.}{}
+    \EMOperation{majCommande()}{Demande du SystèmeWeb de mettre à jour la liste des commandes de l'utilisateur}{}
+\end{EMUCActor}
+
+\EMActor{PanneauInformation}{Un écran pour afficher les différentes informations sur l'état du système (peuvent être affichés: du texte, des lumières, des graphiques, des boutons, ...)}
+\begin{EMUCActor}{L'utilisateur, Controleur}
+    \EMOperation{afficherErreur(err)}{Demande du SystèmeWeb d'afficher l'erreur err courante rencontrée}{}
+    \EMOperation{produitNonDispo(art, b)}{Si b = true, le SystèmeWeb demande l'affichage d'un texte annonçant que le produit art n'est pas disponible en stock. Si b = false, le SystèmeWeb n'affiche rien.}{}
+    \EMOperation{commandeValidée(b)}{Si b = true, le SystèmeWeb demande l'affichage d'un texte annonçant que la commande a été validée. Si b = false, le SystèmeWeb n'affiche rien.}{}
+    \EMOperation{afficherBalance(bal)}{Demande du SystèmeWeb d'afficher la balance bal sélectionnée depuis la liste des balances de l'utilisateur.}{}
+    \EMOperation{afficherCommande(cmd)}{Demande du SystèmeWeb d'afficher la liste des commandes cmd de l'utilisateur.}{}
+    \EMOperation{afficherFacture(cmd, prixTotal)}{Demande du SystèmeWeb d'afficher la facture relative à la commande cmd avec le prix totale prixTotal lié à la commande..}{}
+    \EMOperation{confirmAssignBal()}{L'assignement du produit a bien eu lieu}{}
+    \EMOperation{erreurAssignBal()}{Une erreur a eu lieu pendant l'assignement de la balance.}{}
+    \EMOperation{confirmConfigBal()}{La configuration a bien eu lieu.}{}
+    \EMOperation{erreurConfigBal()}{Une erreur a eu lieu durant la configuration.}{}
+\end{EMUCActor}

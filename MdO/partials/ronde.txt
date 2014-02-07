@@ -1,0 +1,141 @@
+﻿Modèle des opérations : Système Ronde
+
+
+opération : cdeVisualiserDrone
+C.d.U : Superviser Ronde
+Message: 
+        ecranSupervision::{visualiserDrones}
+Pré-condition : 
+Post-condition :
+self.ecranSupervision^visualiserDrones()
+
+
+
+
+ opération : cdeVisualiserTournées
+C.d.U : Superviser Ronde
+Message:
+ecranSupervision::{visualiserTournees} 
+Pré-condition : 
+Post-condition :
+self.ecranSupervision^visualiserTournées()
+
+
+
+
+ opération : envoyerCommande(cde: Commande)
+C.d.U : Livrer une tournée
+Message:
+BD::{ajouterCommande,calculerTournées} 
+Pré-condition : 
+Post-condition :
+        self.bd^ajouterCommande(cde)
+self.bd^calculerTournees()
+
+
+
+
+opération : annulerCommade(List<Commande> lst)
+C.d.U : Livrer une tournée
+Message:
+BD::{supprimerCommande,calculerTournees,} 
+Pré-condition : 
+Post-condition :
+self.bd^supprimerCommande(lst)
+self.bd^calculerTournees()
+
+
+
+
+
+
+
+
+
+
+opération : notifierExpiration(t: Tournee)
+C.d.U : Livrer une tournée
+Message:
+drone::{envoyerDrone}
+BD::{supprimerCommande}
+boiteMail::{envoyerMessage} 
+Pré-condition : 
+Post-condition 
+self.bd^supprimerCommande(sender.tournee.lstCommande)
+sender.tournee.drone^envoyerDrone()
+self.boiteMail^envoyerMessage(sender.tournee.drone.id,DEPART_DRONE)
+sender.tournee.drone.oclInState(Livraison)
+
+
+
+
+
+
+opération : signalerPosition(p: Position)
+C.d.U : Livrer une tournée
+Message:
+ecranSupervision::{visualiserDrone}
+BD::{majPositionDrone} 
+Pré-condition : 
+Post-condition 
+self.bd^majPositionDrone(sender.drone.id, p)
+self.ecranSupervision^visualiserDrone()
+
+
+
+
+opération : signalerLivraison(cde: Commande)
+C.d.U : Livrer une tournée
+Message:
+BD::{supprimerCommande} 
+Pré-condition : 
+Post-condition 
+self.bd^supprimerCommande(cde)
+
+
+
+
+
+
+opération : signalerAnormalie( a: Anormalie)
+C.d.U : Livrer une tournée
+Message:
+BD::{majEtatDrone}
+boiteMail::{envoyerMessage}  
+Pré-condition : 
+Post-condition 
+sender.drone.oclInState(Erreur)
+self.bd.majEtatDrone(sender.drone.id, a)
+self.boiteMail^envoyerMessage(sender.drone.id, a)
+
+
+
+
+opération : signalerRetour()
+C.d.U : Livrer une tournée
+Message:
+BD::{majEtatDrone}
+boiteMail::{envoyerMessage}  
+Pré-condition : 
+Post-condition 
+        self.bd.majEtatDrone(sender.drone.id,PRET)
+        self.boiteMail^envoyerMessage(sender.drone.id,RETOUR)
+        sender.drone.oclInState(Inactif)
+
+
+
+
+opération : estOperationnel()
+C.d.U : Livrer une tournée
+Message:
+BD::{majEtatDrone} 
+DronePhysique::{envoyerDrone}
+Pré-condition : 
+Post-condition 
+        self.bd.majEtatDrone(idDrone,BON_ETATt)
+        if sender.drone.Tournee.lstCommandes is null
+                sender.drone.oclInState(Inactif)
+                self.bd.majEtatDrone(idDrone,Pret)
+        else
+                sender.drone.oclInState(Livraison)
+                self.sender^envoyerDrone()

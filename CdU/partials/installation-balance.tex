@@ -1,0 +1,46 @@
+\begin{UseCase}{Installation balance}
+    \UseCaseActor{Utilisateur}
+    \UseCaseContext{L'utilisateur place une nouvelle balance chez lui.
+    Il veut que sa balance soit installée.}
+
+    \begin{UseCasePre}
+        \begin{enumerate}
+            \item Le système contrôleur est correctement initialisé.
+            \item Le système balance à installer est correctement initialisé par
+                Ronde avec un produit nul, un seuil à 0 et une quantité à
+                racheter à 0.
+            \item Le système balance possède une signature numérique associée à
+                l'utilisateur (fait par Ronde à l'achat).
+        \end{enumerate}
+    \end{UseCasePre}
+
+    \begin{UseCasePost}
+        \begin{enumerate}
+        \item Le système balance est lié au système contrôleur et le système
+            contrôleur est au courant de l'existance du nouveau système balance.
+        \end{enumerate}
+    \end{UseCasePost}
+
+    \begin{UseCaseScenario}
+        \begin{enumerate}
+        \item L'utilisateur appuie sur un bouton de synchronisation sur le
+            système contrôleur.
+        \item Le système contrôleur scan le réseau Wi-Fi autour de lui
+            automatiquement.
+        \item Le système contrôleur trouve un système externe et essaye de se
+            connecter en utilisant la signature numérique associée à l'utilisateur.
+        \item Le système contrôleur ajoute le nouveau système balance à sa
+            base de données.
+        \end{enumerate}
+    \end{UseCaseScenario}
+
+    \begin{UseCaseExtension}
+        \begin{enumerate}
+        \item[3a] Le système contrôleur n'arrive pas à se connecter au système externe :
+            \begin{enumerate}
+                \item Le système contrôleur ignore le système externe. Le CdU reprend
+                    l'exécution à l'étape 1.
+            \end{enumerate}
+        \end{enumerate}
+    \end{UseCaseExtension}
+\end{UseCase}
