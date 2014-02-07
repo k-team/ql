@@ -1,0 +1,111 @@
+\EMName{Réceptacle}
+
+\EMActor{PaveNum}{Pavé numérique type standard, composé de chiffres (valeur
+    allant de 0 à 9), d'un bouton "valider", et d'un bouton "annuler".}
+\begin{EMUCActor}{}
+    \EMOperation{rentrerCode(n)}{Le code $n$ est vérifié.}{}
+    \EMOperation{modifierCode(n)}{Le code $n$ est fixé en tant que nouveau
+        code.}{}
+\end{EMUCActor}
+
+\EMActor{capteurBadge}{Capteur de badge pour détecter la présence du badge de
+    l'utilisateur (ou celui du technicien).}
+\begin{EMUCActor}{}
+    \EMOperation{vérificationBadge(b)}{La valeur du badge est vérifiée.}{}
+\end{EMUCActor}
+
+\EMActor{diode}{Diode pouvant prendre une couleur verte ou rouge pendant un
+    temps donné.}
+\begin{EMUCActor}{}
+    \EMOperation{diodeVerte()}{Demande à la diode de devenir verte pour 3
+        secondes.}{}
+    \EMOperation{diodeRouge()}{Demande à la diode de devenir rouge pour 3
+        secondes.}{}
+\end{EMUCActor}
+
+\EMActor{panneauAffichage}{Panneau d'affichage pour l'affichage d'informations
+    générales sur l'état du système.}
+\begin{EMUCActor}{}
+    \EMOperation{msgAccueil()}{Demande d'affichage du message d'accueil.}{}
+    \EMOperation{msgCodeIncorrect(e)}{Si $e$ est vrai, demande d'affichage d'un
+        message indiquant que le code rentré est incorrect. Sinon, demande du
+        réceptacle d'effacer le message.}{}
+    \EMOperation{msgBadgeIncorrect(e)}{Similaire à $msgCodeIncorrect(e)$.}{}
+    \EMOperation{msgModifierCode(e)}{Similaire à $msgCodeIncorrect(e)$.
+        L'effacement est suivi d'une demande d'affichage d'un message
+        demandant la fermeture.}{}
+    \EMOperation{msgHorsService(e)}{Similaire à $msgCodeIncorrect(e)$.}{}
+\end{EMUCActor}
+
+\EMActor{supportDrone}{}
+\begin{EMUCActor}{}
+    \EMOperation{dronePresent()}{Le support indique que le drône est présent.}{}
+    \EMOperation{bloquerDrone(e)}{Si $e$ est vrai, une demande est envoyée au
+        support pour bloquer le drône. Sinon, une demande est envoyée au
+        support pour relâcher le drône.}{}
+\end{EMUCActor}
+
+\EMActor{porteLaterale}{Porte latérale du réceptacle, utilisée par le
+    client pour récupérer les colis. Ne peut être ouverte que manuellement.}
+\begin{EMUCActor}{}
+    \EMOperation{porteFerme()}{Signale au réceptacle que la porte vient d'être
+        fermée.}{}
+    \EMOperation{bloquerPorte()}{Demande du réceptacle de bloquer la porte
+        latérale.}{}
+    \EMOperation{débloquerPorte()}{Demande du réceptacle de débloquer la porte
+        latérale.}{}
+\end{EMUCActor}
+
+\EMActor{panneauSuperieur}{Panneau supérieur du réceptacle, utilisé par le
+    drone pour déposer les colis. Peut être ouverte électroniquement ou
+    manuellement.}
+\begin{EMUCActor}{}
+    \EMOperation{panneauFerme()}{Signale au réceptacle que le panneau supérieur
+        vient d'être fermé.}{}
+    \EMOperation{bloquerPanneau()}{Demande du réceptacle de bloquer le panneau
+        supérieur.}{}
+    \EMOperation{debloquerPanneau()}{Demande du réceptacle de débloquer le
+        panneau supérieur.}{}
+    \EMOperation{ouvrirPanneau()}{Demande du réceptacle d'ouvrir du
+        panneau.}{}
+    \EMOperation{fermerPanneau()}{Demande du réceptacle de fermer le panneau
+        supérieur.}{}
+\end{EMUCActor}
+
+\EMActor{capteurRFID}{Un capteur RFID permettant de vérifier la présence d'un
+    colis à l'intérieur du réceptacle.}
+\begin{EMUCActor}{}
+    \EMOperation{colisPresent()}{Le capteur indique s'il a détecté la présence
+        d'un colis à l'intérieur du réceptacle.}{}
+\end{EMUCActor}
+
+\EMActor{systemeDrone}{Correspond au système du drone en liaison avec le
+    réceptacle.}
+\begin{EMUCActor}{}
+    \EMOperation{verificationColis(idDestinataire)}{Signal du drone demandant
+        la vérification de la correspondance entre un colis et le
+        réceptacle.}{}
+    \EMOperation{ouverturePanneau()}{Signal du drone demandant l'ouverture du
+        panneau supérieur du réceptacle.}{}
+    \EMOperation{fermeturePanneau()}{Signal du drone demandant la fermeture du
+        panneau supérieur du réceptacle.}{}
+    \EMOperation{timeoutVerification()}{Signal du drone indiquant que celui-ci
+        n'a pas reçu la confirmation de l'action demandée dans le temps
+        voulu.}{}
+    \EMOperation{receptaclePlein()}{Signal du réceptacle indiquant au drone que
+        le réceptacle est plein.}{}
+    \EMOperation{colisCorrect(e)}{Si $e$ est vrai, signale que le colis
+        correspond bien à ce réceptacle. Sinon, signale que le colis ne
+        correspond pas à ce réceptacle.}{}
+    \EMOperation{signalReceptacle()}{Signal du réceptacle pour indiquer au
+        drone la position du réceptacle pour que celui-ci se pose.}{}
+    \EMOperation{sendConfirmation(msg)}{Signal du receptacle pour indiquer
+        qu'une action a bien été réalisée. Cette action est indiqué par le
+        message $msg$ (sous la forme d'une énumération).}{}
+\end{EMUCActor}
+
+\EMActor{systemeClient}
+\begin{EMUCActor}{}
+    \EMOperation{signalerReception()}{Signal du réceptacle au système client
+        pour indiquer qu'il y a un colis à récupérer dans le réceptacle.}{}
+\end{EMUCActor}
