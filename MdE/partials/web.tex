@@ -4,13 +4,13 @@
     \begin{EMUCActor}{Utilisateur}
         \EMOperation{assignBal(bal, art, seuil, qte)}{Le bouton a été activé pour
             la balance $bal$ avec l'article $art$ et comme configuration le couple
-            $(seuil, qte)$, respectivement le seuil et la quantité.}{}
+            $(seuil, qte)$, respectivement le seuil et la quantité.}{Configurer les balances}
     \end{EMUCActor}
 
     \EMActor{BtnConfigBalance}{Un bouton pour configurer une balance}
     \begin{EMUCActor}{Utilisateur}
         \EMOperation{configBal(bal, seuil, qte)}{Le bouton a été activé pour la
-            balance $bal$ avec la configuration $(seuil, qte)$.}{}
+            balance $bal$ avec la configuration $(seuil, qte)$.}{Configurer les balances}
     \end{EMUCActor}
 
     \EMActor{BtnScan}{Un bouton pour identifier les balances associées au client}
@@ -18,44 +18,44 @@
         \EMOperation{scan()}{Demande d'identification de la part d'un contrôleur
             externe (liaison entre les deux toujours pas établie). Répond par une
             confirmation si la clé du système balance correspond à celui du
-            contrôleur.}{}
+            contrôleur.}{Configurer les balances}
     \end{EMUCActor}
 
     \EMActor{BtnVoirCommande}{Un bouton pour afficher la liste des commandes
         courante associée à l'utilisateur.}
     \begin{EMUCActor}{Utilisateur}
-        \EMOperation{voirCommande()}{Le bouton à été actionné.}{}
+        \EMOperation{voirCommande()}{Le bouton à été actionné.}{Valider une commande}
     \end{EMUCActor}
 
     \EMActor{BtnValiderCommande}{Un bouton pour valider la liste des commandes
         courante associée à l'utilisateur.}
     \begin{EMUCActor}{Utilisateur}
-        \EMOperation{validerCommande()}{Le bouton à été actionné.}{}
+        \EMOperation{validerCommande()}{Le bouton à été actionné.}{Valider une commande}
     \end{EMUCActor}
 
     \EMActor{InterfaceCatalogue}{Interface client pour ajouter un produit à la
         liste des commandes de l'utilisateur.}
     \begin{EMUCActor}{Utilisateur, Controleur}
-        \EMOperation{listeArticle()}{La liste des produits est envoyée au client.}{}
-        \EMOperation{produitNonStock(art)}{L'article $art$ n'est plus en stock.}{}
+        \EMOperation{listeArticle()}{La liste des produits est envoyée au client.}{MAJ d'une commande}
+        \EMOperation{produitNonStock(art)}{L'article $art$ n'est plus en stock.}{MAJ d'une commande}
     \end{EMUCActor}
 
     \EMActor{SystèmeBalance}{L'interface balance qui notifie un manque en quantité
         de l'article.}
     \begin{EMUCActor}{Balance, Controleur}
         \EMOperation{alarm(art, qte)}{Une quantité $qte$ est demandée pour l'article
-            $art$ associé à la balance afin d'être ajoutée à la commande.}{}
+            $art$ associé à la balance afin d'être ajoutée à la commande.}{MAJ d'une commande}
     \end{EMUCActor}
 
     \EMActor{ListeCommande}{La liste des commandes de l'utilisateur divisée en
         articles, avec chacun ses caractéristiques.}
     \begin{EMUCActor}{Utilisateur, Controleur}
         \EMOperation{estArticleCoché(art)}{Un article $art$ de la liste des commande
-            a été coché ou décoché.}{}
+            a été coché ou décoché.}{Valider une commande}
         \EMOperation{changerQuantité(art, qte)}{Demande de modification de la
-            quantité de l'article $art$ par la quantité $qte$.}{}
+            quantité de l'article $art$ par la quantité $qte$.}{Valider une commande}
         \EMOperation{majCommande()}{Demande du $Système Web$ de mettre à jour la
-            liste des commandes de l'utilisateur.}{}
+            liste des commandes de l'utilisateur.}{Valider une ommande, MAJ d'une commande}
     \end{EMUCActor}
 
     \EMActor{PanneauInformation}{Un écran pour afficher les différentes
@@ -63,26 +63,26 @@
         des boutons, ...).}
     \begin{EMUCActor}{Utilisateur, Controleur}
         \EMOperation{afficherErreur(err)}{Demande du $Système Web$ d'afficher
-            l'erreur $err$ rencontrée.}{}
+            l'erreur $err$ rencontrée.}{Valider une ommande, MAJ d'une commande}
         \EMOperation{produitNonDispo(art, b)}{Si $b$ est vrai, le $Système Web$
             demande l'affichage d'un texte annonçant que l'article $art$ n'est pas
-            disponible en stock. Sinon, le $Système Web$ n'affiche rien.}{}
+            disponible en stock. Sinon, le $Système Web$ n'affiche rien.}{MAJ d'une commande}
         \EMOperation{commandeValidée(b)}{Si $b$, le $Système Web$ demande
             l'affichage d'un texte annonçant que la commande a été validée. Sinon,
-            le $Système Web$ n'affiche rien.}{}
+            le $Système Web$ n'affiche rien.}{Valider une commande}
         \EMOperation{afficherBalance(bal)}{Demande du $Système Web$ d'afficher la
             balance $bal$ sélectionnée depuis la liste des balances de
-            l'utilisateur.}{}
+            l'utilisateur.}{Configurer les balances}
         \EMOperation{afficherCommande(cmd)}{Demande du $Système Web$ d'afficher la
-            liste des commandes $cmd$ de l'utilisateur.}{}
+            liste des commandes $cmd$ de l'utilisateur.}{Valider une commande}
         \EMOperation{afficherFacture(cmd, prixTotal)}{Demande du $Système Web$
             d'afficher la facture relative à la commande $cmd$ avec le prix total
-            $prixTotal$ liée à la commande.}{}
-        \EMOperation{confirmAssignBal()}{L'assignement du produit a bien eu lieu.}{}
+            $prixTotal$ liée à la commande.}{Valider une commande}
+        \EMOperation{confirmAssignBal()}{L'assignement du produit a bien eu lieu.}{Configurer les balances}
         \EMOperation{erreurAssignBal()}{Une erreur a eu lieu pendant l'assignement
-            de la balance.}{}
-        \EMOperation{confirmConfigBal()}{La configuration a bien eu lieu.}{}
+            de la balance.}{Configurer les balances}
+        \EMOperation{confirmConfigBal()}{La configuration a bien eu lieu.}{Configurer les balances}
         \EMOperation{erreurConfigBal()}{Une erreur a eu lieu durant la
-            configuration.}{}
+            configuration.}{Configurer les balances}
     \end{EMUCActor}
 \end{EM}
