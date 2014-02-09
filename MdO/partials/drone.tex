@@ -1,0 +1,104 @@
+\begin{OM}{Drone}{Drone}
+    \begin{OMOperation}{}{}{}
+        \begin{OMMessages}
+            \OMMessage{}{}
+        \end{OMMessages}
+
+        \begin{OMPre}
+        \end{OMPre}
+
+        \begin{OMPost}
+        \end{OMPost}
+    \end{OMOperation}
+
+verificationColisActuel(idColis:IdRFID)
+Acteur du MdE : listeColis
+CdU : Livrer une commande
+Messages : 
+* systeReceptacle::{verificationColis}
+* ListeTimers::{enclanchementTimer}
+Pré : self.receptacleConnecte <> 0
+Post :
+        self.systeReceptacle^verificationColis(self.listeColis[idColis].idDestintaire)
+        and
+        timeInfo.command := EnumCommand::verificationColis
+        self.ListeTimers^enclanchementTimer(timerInfo)
+
+
+Opération : Drone::receptaclePlein()
+Acteur du MdE : SystemeReceptacle
+CdU : Livrer une commande
+Messages : 
+* systèmeROnde::{SignalementErreur}
+Pré : self.receptacleConnecte <> 0
+Post :
+        self.systemeRonde^SignalementErreur(“ReceptaclePlein”)
+        and
+self.etat := EnCirculation
+
+
+Opération : Drone::colisCorrect(e:bool)
+Acteur du MdE : SystemeReceptacle
+CdU : Livrer une commande
+Messages : 
+* systemeReceptacle::{ouverturePanneau}
+Pré : self.receptacleConnecte <> 0
+Post :
+        self.systemeReceptacle^ouverturePanneau()
+
+
+Opération : Drone::signalReceptacle(idReceptacle:IdRFID)
+Acteur du MdE : SystemeReceptacle
+CdU : Livrer une commande
+Messages : -
+Pré : self.receptacleConnecte == 0
+Post :
+        self.receptacleConnecte == idReceptacle
+        and 
+        self.etat := LivraisonEnCours
+
+
+Opération : Drone::sendConfirmation(msg:ConfirmMsg)
+Acteur du MdE : SystemeReceptacle
+CdU : Livrer une commande
+Messages : 
+* ListeTimers::{desactiverTimer}
+Pré : self.receptacleConnecte <> 0
+Post :
+        self.ListeTimers^desactiverTimer(msg)
+
+
+
+
+Opération : Drone::expirationTimer(idTimer:IdTimer)
+Acteur du MdE : ListeTimer
+CdU : Livrer une commande
+Messages : 
+* trappe::{activerSystUrgence}
+* systemeRonde::{SygnalementErreur}
+Pré :
+Post :
+        if ListeTimers[idTimer].command = FermetureTrappe then
+                self.trappe^activerSystUgence()
+        fi
+        self.systemeRonde^ SignalementErreur( ListeTimers[idTimer].command )
+
+
+Opération : Drone::ColisPret()
+Acteur du MdE : tapisRoulant
+CdU : Livrer une commande
+Messages : 
+* ListeColis::{getCurColis}
+Pré :
+Post :
+        self.ListeColis^getCurColis()
+
+
+Opération : Drone::EnvoyerDrone(itineraire:ItineraireLivraison)
+Acteur du MdE : SystemeRonde
+CdU : Livrer une commande
+Messages : -
+Pré :
+Post :
+        self.etat := EnCirculation
+\end{OM}

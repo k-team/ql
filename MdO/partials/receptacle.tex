@@ -1,8 +1,13 @@
-﻿Modèle des opérations : Receptacle
+Modèle des opérations : Receptacle
 
 
 Opération : Receptacle::rentrerCode(n:number)
+Acteur du MdE : PaveNum
 CdU : Réception d’une commande
+Messages : 
+* porteLaterale::{debloquerPorte}
+* panneauAffichage::{msgModifierCode, msgCodeIncorrect}
+* diode::{diodeVerte, diodeRouge}
 Pré :
 Post :
 if n = self.codeAdmin then
@@ -31,7 +36,10 @@ self.diode^diodeRouge()
 
 
 Opération : Receptacle::modifierCode(n:number)
+Acteur du MdE : PaveNum
 CdU : Réception d’une commande
+Messages : 
+* panneauAffichage::{msgModifiercode}
 Pré :        
 not(self.porteLaterale.closedState)
 Post :
@@ -50,7 +58,12 @@ self.panneauAffichage^msgModifierCode(false)
 
 
 Opération : Receptacle::verificationBadge(b:badge)
+Acteur du MdE : capteurBadge
 CdU : Réception d’une commande
+Messages : 
+* porteLaterale::{debloquerPorte}
+* panneauAffichage::{msgModifierCode, msgBadgeIncorrect}
+* diode::{diodeVerte, diodeRouge}
 Pré :
 Post : 
 if b == self.idBadgeAdmin then
@@ -77,7 +90,10 @@ self.diode^diodeRouge()
 
 
 Opération : Receptacle::verificationColis(idDestinataire:IdRFID)
+Acteur du MdE : systemeDrone
 CdU : Livrer une commande
+Messages : 
+* systemeDrone::{colisCorrect}
 Pré :
 Post :
         if self.id == idDestinataire then
@@ -87,8 +103,13 @@ Post :
 
 
 Opération : Receptacle::ouverturePanneau()
+Acteur du MdE : systemeDrone
 CdU : Livrer une commande
-Pré : not(self.panneauSuperieur.lockedState)
+Messages : 
+* panneauSuperieur::{ouvrirPanneau}
+* systemeDrone::{sendConfirmation}
+Pré : 
+not(self.panneauSuperieur.lockedState)
 Post :
         if self.panneauSuperieur^ouvrirPanneau() then
                 self.panneauSuperieur.closedState = false
@@ -99,8 +120,13 @@ Post :
 
 
 Opération : Receptacle::fermeturePanneau()
+Acteur du MdE : systemeDrone
 CdU : Livrer une commande
-Pré : not(self.panneauSuperieur.lockedState)
+Messages : 
+* panneauSuperieur::{fermerPanneau}
+* systemeDrone::{sendConfirmation}
+Pré :
+ not(self.panneauSuperieur.lockedState)
 Post :
         if self.panneauSuperieur^fermerPanneau() then
                 self.panneauSuperieur.closedState = true
@@ -109,14 +135,22 @@ Post :
 
 
 Opération : Receptacle::timeoutVerification()
+Acteur du MdE : systemeDrone
 CdU : Livrer une commande
+Messages : 
+* PanneauAffichage{msgHorsService}
 Pré :
 Post :
         self.panneauAffichage^msgHorsService(true)
 
 
+
+
 Opération : Receptacle::dronePresent()
+Acteur du MdE : supportDrone
 CdU : Livrer une commande
+Messages : 
+* supportDrone::{bloquerDrone}
 Pré : not(self.supportDrone.lockedState)
 Post :
         self.supportDrone^bloquerDrone(true)
@@ -124,8 +158,15 @@ Post :
         self.supportDrone.lockedState = true
 
 
+
+
+
+
 Opération : Receptacle::porteFerme()
+Acteur du MdE : PorteLaterale
 CdU : Livrer une commande
+Messages : 
+* porteLaterale::{bloquerPorte}
 Pré :
 Post :
         self.porteLaterale^bloquerporte()
@@ -133,8 +174,15 @@ Post :
         self.porteLaterale.lockedState = true
 
 
+
+
+
+
 Opération : Receptacle::panneauFerme()
+Acteur du MdE : PanneauSuperieur
 CdU : Livrer une commande
+Messages : 
+* panneauSuperieur::{bloquerPanneau}
 Pré :
 Post :
         self.panneauSuperieur^bloquerPanneau()
@@ -142,8 +190,15 @@ Post :
         self.panneauSuperieur.lockedState = true
 
 
+
+
+
+
 Opération : Receptacle::colisPresent()
+Acteur du MdE : capteurRFID
 CdU : Livrer une commande
+Messages : 
+* systemeClient::{signalerReception}
 Pré :
 Post :
         Self.systemeClient^signalerReception()

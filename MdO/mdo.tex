@@ -1,8 +1,50 @@
 \input{../entete}
+\usepackage{listings}
+\setlength{\parindent}{0pt}
 
 \newcommand{\OMInput}[1]{
     \def \OMLabel {#1}
     \input{partials/#1}
+}
+
+\newenvironment{OM}[2]{
+    \def \OMId {#1}
+    \OMName{#2}
+}{
+}
+
+\newcommand{\OMName}[1]{
+    \section{#1}
+}
+
+\newenvironment{OMOperation}[3]{
+    \subsection{Opération : $\OMId::#1$}
+
+    Acteur du MdE : #2 \\
+    Cas d'utilisation : #3 \\
+}{
+}
+
+\newenvironment{OMMessages}{
+    Messages :
+
+    \begin{itemize}
+}{
+    \end{itemize}
+}
+
+\newcommand{\OMMessage}[2]{
+    \item[*] #1::\{#2\}
+}
+
+\lstnewenvironment{OMPre}{
+    Pré-conditions :
+}{
+}
+
+\lstnewenvironment{OMPost}{
+    Post-conditions :
+}{
 }
 
 \begin{document}
@@ -12,6 +54,7 @@
 \OMInput{balance}
 \OMInput{receptacle}
 \OMInput{ronde}
+\OMInput{drone}
 \OMInput{web}
 
 \end{document}
