@@ -1,0 +1,173 @@
+\input{../entete}
+
+\newenvironment{Phase}[3]{
+    \subsection{#1}
+    \noindent
+    \textbf{Fournitures :} #2 \\
+    \textbf{Livrables :} #3 \\
+}{
+}
+
+\newenvironment{SubPhases}{
+    \textbf{Sous-phases :}
+    \begin{enumerate}
+}{
+    \end{enumerate}
+}
+
+\begin{document}
+
+\Document{Dossier d'Initialisation}
+
+\section{Contexte et objectifs de l'étude}
+
+L'entreprise Ronde est chargée d'installer un système centralisé de livraison à
+la personne dans la ville de Lyon pour améliorer \textit{l'intelligence
+    urbaine}, se plaçant dans un contexte de connectivité moderne. L'étude doit
+permettre d'automatiser certaines tâches humaines pour libérer du temps pour
+les clients concernés et limiter le nombre de trajets chez des magasins de
+distribution, en les remplaçant par des livraisons directes.
+
+\section{Description de l'équipe}
+
+L'équipe "K", chargée de l'étude est composée des membres suivants :
+
+\begin{itemize}
+\item Jean-Marie Comets, chef d'équipe
+\item Franck Mpemba Boni, responsable qualité
+\item Samuel Carensac
+\item Pierre Turpin
+\item Iler Viraragavane
+\item Grégoire Cattan
+\item Phan Van Hau
+\end{itemize}
+
+\section{Description des livrables}
+
+\begin{itemize}
+\item Dossier d'initialisation : ce document.
+\item Architecture du système : modélisation du système envisagé accompagné d'une description textuelle de chacun des éléments non-trivaux.
+\item Cas d'utilisation : ensemble de documents donnant une description textuelle de chacunes des utilisations du système, décrivant notamment les cas idéals ainsi que les cas d'erreurs, leur interprétation et leur gestion.
+\item Modèles de l'environnement : ensemble de schémas accompagnés d'une description textuelle, détaillant les différents sous-systèmes et leurs interfaces externes.
+\item Modèles des concepts
+\item Modèles de protocole
+\item Spécifications OCL des opérations
+\end{itemize}
+
+\section{Découpage en phases}
+
+\begin{enumerate}
+\item Identification des besoins - Modèles des cas d'utilisation
+\item Conception de la solution envisagée - Architecture du système
+\item Définition des opérations - Modèles de l'environnement
+\item Définition des entités - Modèles des concepts
+\item Description des protocoles - Modèles de protocole
+\item Description des opérations - Spécifications OCL des opérations
+\end{enumerate}
+
+\begin{Phase}{Identification des besoins}{cahier des charges client}{modèles des cas d'utilisation}
+\begin{SubPhases}
+\item Initialisation
+\item Définition du système
+* livrable intermédiaire : description textuelle des besoins
+\item Identification des cas d'utilisation
+* livrables intermédiaires : listing des cas d'utilisation et des acteurs du système
+\item Rédaction des cas d'utilisation
+\item Bilan
+\end{SubPhases}
+\end{Phase}
+
+\begin{Phase}{Conception de la solution envisagée}{modèles des cas d'utilisation et description textuelle des besoins}{architecture du système}
+\begin{SubPhases}
+\item Initialisation
+\item Identification des acteurs système
+\item Spécification des interfaces de communication entre sous-systèmes
+* livrables intermédiaires : diagrammes détaillés des interfaces de communication
+\item Spécification du matériel nécessaire
+* livrables intermédiaires : description textuelle du matériel envisagé
+\item Bilan
+\end{SubPhases}
+\end{Phase}
+
+\begin{Phase}{Définition des opérations}{modèles des cas d'utilisation et architecture du système}{modèles de l'environnement}
+%\begin{SubPhases}
+%\item Initialisation
+%\item Bilan
+%\end{SubPhases}
+\end{Phase}
+
+\begin{Phase}{Définition des entités}{listing des acteurs et architecture du système}{modèles des concepts}
+%\begin{SubPhases}
+%\item Initialisation
+%\item Bilan
+%\end{SubPhases}
+\end{Phase}
+
+\begin{Phase}{Description des opérations}{définition des opérations, modèles des cas d'utilisation et architecture du système}{Spécifications OCL des opérations}
+%\begin{SubPhases}
+%\item Initialisation
+%\item Bilan
+%\end{SubPhases}
+\end{Phase}
+
+\section{Estimation de la charge par phase}
+
+\begin{center}
+    \begin{tabular}{lr}
+        \textbf{Phase} & \textbf{Charge} \\
+    Identification des besoins & 0 \% \\
+    Conception de la solution envisagée & 0 \% \\
+    Définition des opérations & 0 \% \\
+    Définition des entités & 0 \% \\
+    Modèles de protocole & 0 \% \\
+    Description des opérations & 0 \%
+    \end{tabular}
+\end{center}
+
+Analyse des risques
+
+
+Nous concevons à la fois le système d'approvisionnement intelligent et
+l'application centralisant les commandes client. Nous ne sommes pas
+responsables de l'utilisation du réseau par les drones, et donc les risques
+liés à la navigation des drones ne nous concernent pas. \\
+
+Par contre, nous sommes responsables des livraisons aux clients et de l'état
+final de leurs commandes, donc un premier risque identifié est le
+disfonctionnement du chargement des drones et le déchargement du colis dans le
+réceptacle du client. Dans le même esprit, nous devons aussi maintenir les
+drones dans un état correct lors du chargement et de la livraison. \\
+
+Ensuite, nous devons assurer le bon fonctionnement du système client dans le
+cas d'un disfonctionnement matériel ou logiciel. Ceci implique que nous devons
+gérer la signalisation des problèmes observés par le client (hotline,
+signalisation transmise au système centralisé, etc...). \\
+
+Enfin, nous devons garantir le controle des drones dans le cas d'une panne du
+système centralisé à l'entrepôt, qui pourrait impliquer un dommage des drones.
+Les clients et les systèmes clients doivent notamment être informés de la panne
+à ce moment.
+
+\section{Description des moyens mis en œuvre pour la gestion de projet}
+
+Pour la gestion des tâches, nous avons décidé d'utiliser une application web
+fonctionnant sur un système de tickets : \href{https://trello.com}{Trello}. Celle-ci
+intègre des notifications par email et des commentaires sur tickets, ainsi que
+la possibilité d'attacher des fichiers aux tickets, permettant le suivi en
+continu de l'évolution d'une tâche (une tâche correspond à un ou plusieurs
+tickets). \\
+
+En ce qui concerne la rédaction, nous avons utilisé Google Drive avec des
+extensions pour la modélisation (LucidChart notamment). Grâce au partage
+immédiat avec l'équipe et à l'édition en temps réel, nous pouvons travailler le
+plus efficacement possible sur les différentes tâches de rédaction, en
+observant l'évolution au fur et à mesure du document. La fonctionnalité d'envoi
+groupé à tous les collaborateurs est d'ailleurs très utile pour une
+communication rapide envers les membres d'équipe concernés par un ou plusieurs
+documents. \\
+
+Enfin pour les réunions d'équipe, nous avons utilisé la méthode classique du
+tableau noir pour faire un brainstorming des idées et clarifier la
+compréhension du système de chacun.
+
+\end{document}
