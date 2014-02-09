@@ -9,19 +9,25 @@
 }
 
 \LQSchema{
-
-Le MdC possède fait le lien entre les interaction du système avec les acteurs deu MdE. La différence reside que les message ne sont plus affichés et que le système est representer par un diagramme de classe UML. Les acteurs sont les même que ceux du MdE et sont donc représenter de la meme manière par des “bonhomme” ayant leur cardinalité  au niveau de leur tete. Le systeme est donc un diagramme de classe auquel on lie les acteurs comme si il était une classe (dans un diagramme de classe UML). Dans la classe systeme on definit les attribut qui décrive l’état du système . A l’intérieur de la classe représentant le système sont placées les classes modélisant les concepts. Elles possèdent elles aussi des attributs, mais pas d’opération,
-et peuvent éventuellement contenir d’autres concepts (à éviter le plus possible). Chaque acteur est lié à un concept.
-
-
+    Le MdC possède fait le lien entre les interaction du système avec les
+    acteurs deu MdE. La différence reside que les message ne sont plus affichés
+    et que le système est representer par un diagramme de classe UML. Les
+    acteurs sont les même que ceux du MdE et sont donc représenter de la meme
+    manière par des "bonhomme" ayant leur cardinalité  au niveau de leur tete.
+    Le systeme est donc un diagramme de classe auquel on lie les acteurs comme
+    si il était une classe (dans un diagramme de classe UML). Dans la classe
+    systeme on definit les attribut qui décrive l'état du système . A
+    l'intérieur de la classe représentant le système sont placées les classes
+    modélisant les concepts. Elles possèdent elles aussi des attributs, mais
+    pas d'opération, et peuvent éventuellement contenir d'autres concepts (à
+    éviter le plus possible). Chaque acteur est lié à un concept.
 }
 
-\begin{figure}
+\begin{figure}[H]
    \centering
-   \includegraphics[width=\textwidth]{images/MdC.png}
-   \caption{Schéma du modèle des concept}
+   \includegraphics[width=\textwidth]{images/MdC}
+   \caption{Schéma du modèle des concepts}
 \end{figure}
-
 
 \LQModel{
     Un MdC découle un MdE donc on a autant de MdC que de MdE. Ils utilisent les
