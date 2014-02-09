@@ -1,0 +1,24 @@
+\begin{UseCase}{Modèle de l'environnement}
+
+\UseCaseDescription{
+		Le modèle de l’environnement décrit les messages entre le système et les acteurs
+son environnement. Les acteurs sont par exemple des actionneurs (boutons, leviers, 
+capteurs, …) ou des vecteurs d’informations (témoins lumineux, affichage digital, écran,
+…). Le système apparaît lui même comme une boîte noire où seules les interactions
+apparaissent.
+}
+
+\UseCaseModele{
+Chaque MdE correspond un sous-système qui découle de l’analyse des différents CdU.\\
+
+Les acteurs du MdE communiquent et échangent des messages avec le système étudié. Ils sont différents de ceux des CdU. Il sont intermédiaire direct. entre un acteur du CdU et le système (le bouton est l'intermédiaire direct entre le consommateur et le système “distributeur automatique”). Cependant, il est possible que les deux acteurs soient confondus dans certains cas. Nous essayerons au mieux de différencier les acteurs du CdU et de la MdE.\\
+
+A une action de l’environnement vers le système, doit correspondre une action d’un utilisateur vers le système dans le Cdu (et inversement). L’action “afficherMonnaie” que reçoit l’acteur “PanneauInformation” découle du cas d’utilisation “acheterBoisson”. Plus le scénario d’un cas d’utilisation est précis, plus les MdE sont simples à concevoir.
+
+}
+
+\UseCaseEntreModele{
+Lorsqu’il existe plusieurs modèle de l’environnement différent pour une même structure, il faut s’assurer de la cohérence entre ces modèles. Ainsi si il existe un échange de message entre un  système et un acteur dans un modèles de l’environnement, il faut s’assurer que cette échange de message reste le même dans un autre modèle.
+}
+
+\end{UseCase}
