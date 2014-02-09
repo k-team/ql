@@ -9,6 +9,41 @@
     messages pouvant intervenir lors de notre opération.
 }
 
+
+\textbf{Description du modèle textuelle}\\
+Cette étude doit suivre un schéma précis constituée comme suit:
+ \\
+\begin{description}
+\item[Opération :] Système::Opération
+\item[Acteur du MdE :] Nom de l’acteur du MdE rattaché à cette opération
+\item[CdU :] Nom du CdU rattaché à cette opération
+\item[Message :] Acteur{messages envoyé par cette acteur}
+\item[Pré :] Algorithme définissant les pré-conditions
+\item[Post :] Algorithme définissant les post
+\end{description}
+
+\textbf{Exemple du modèle textuelle}\\
+ \\
+\begin{description}
+\item[Opération :]  DAB::éjecterMonnaie() 
+\item[Acteur du MdE :] DAB
+\item[CdU :] acheter une boisson
+
+\item[Message :] \\
+\>PanneauInformation ::{afficherMonnaie, monnaieInsuffisante, boissonNonDispo}\\
+\>RecepMonnaie::{relacherMonnaie}
+
+\item[Pré :] 
+\item[Post :] \\
+	\>self.montantReçu = 0 and\\
+	\>self.récepMonnaie ^relâcherMonnaie() and\\
+	\>self.panneauInformation ^afficherMonnaie(0) and\\
+	\>self.panneauInformation ^monnaieInsuffisante(false) and\\
+	\>self.panneauInformation ^ boissonNonDispo(false) 
+
+\end{description}
+
+
 \LQModel{
     Un MdC découle un MdE donc on a autant de MdC que de MdE. Ils utilisent les
     même acteurs et donc la convention de nommage utilisée pour le MdE doit

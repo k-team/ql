@@ -8,6 +8,49 @@
     cahier des charges.
 }
 
+\textbf{Description du modèle textuelle}\\
+Cette étude doit suivre un schéma précis constituée comme suit:
+ \\
+\begin{description}
+\item[Nom:] Nom du cas d’utilisation doit toujours commencer par un verbe d’action
+\item[Contexte: ]Définit le contexte de l’action réaliser sur notre système
+\item[Acteur principal:] Nom de l’acteur agissant sur le système 
+\item[Pré-condition:] Définit l’état du système nécessaire précèdent la réalisation de l’action. Il est possible qu’il n’existe pas de pré-condition à la réalisation d’un cas d’utilisation.
+\item[Post-Condition:] Définit les conditions de sorties du systèmes.
+\item[Scénario Principal:] Décrit par étape les actions du système permettant la réalisation de la fonction principale du cas d’utilisation. Ce scénario principale ne doit pas définir les cas d’erreur, le scénario présenter ici et le cas de réalisation optimale de la fonction.
+ \item[Extension (dysfonctionnement):] On définit ici l’ensemble des erreur pouvant intervenir lors de la réalisation du scénario principale. Pour chaque cas d’erreur trouver on doit décrire la réponse approprié du système.
+
+\end{description}
+
+
+\textbf{Exemple du modèle textuelle}\\
+ \\
+\begin{description}
+\item[Nom:]// Acheter une boisson
+\item[Contexte:]//l’utilisateur veut acheter une boisson
+\item[Acteur principal:] //Le consommateur
+\item[Pré-condition:] Le système est correctment initialisé
+
+\item[Post-Condition:]
+\item[Scénario Principal:]\\
+		\begin{enumerate}
+			\item introduire une pièce (action peut être répété plusieurs fois)
+			\item le consommateur selectionne une boisson
+	    \item verification de la monnaie par le distributeur et de la disponibilité de la boisson
+	   \item le consommateur retire sa boisson
+
+		\end{enumerate}}
+		
+\item[Extension (dysfonctionnement):] 
+		\begin{itemize}
+			\item[1)a] La machine est HS
+			\item[1)a-1] La machine rend la pièce insérée
+			\item[1)a-2] Le consommateur récupère sa monnaie. Le CdU est un echec
+		\end{itemize}
+
+\end{description}
+
+
 \LQSchema{
     On definit d'abord le périmètre du système par un rectangle en mettant le
     nom de ce système en haut de ce rectangle.  Les acteurs du CdU sont
