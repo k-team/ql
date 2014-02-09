@@ -1,71 +1,33 @@
 \input{../entete}
 
-\newcommand{\UseCaseInput}[1]{
-    \def \UseCaseLabel {sec:#1}
+\newcommand{\LQInput}[1]{
+    \def \LQLabel {sec:#1}
     \input{partials/#1}
 }
 
-\newenvironment{UseCase}[1]{
+\newenvironment{LQ}[1]{
     \section{#1}
-    \label{\UseCaseLabel}
+    \label{\LQLabel}
     \setlength{\parindent}{0cm}
 }{}
 
-\newcommand{\UseCaseEntry}[2]{\textbf{#1} #2}
-\newcommand{\UseCaseChapter}[2]{\textbf{#1} #2}
+\newcommand{\LQEntry}[2]{\textbf{#1} #2}
+\newcommand{\LQChapter}[2]{\textbf{#1} #2}
 
+\newcommand{\LQDescription}[1]{\LQChapter{Description du modele \\} {#1}}
+\newcommand{\LQModel}[1]{\LQChapter{Controle qualite : cohérence du modèle \\}{#1}}
+\newcommand{\LQBetweenModels}[1]{\LQChapter{Controle qualite: coherence entre les modeles \\}{#1}}
 
-\newcommand{\UseCaseDescription}[1]{\UseCaseChapter{Description du modele \\} {#1}}
-\newcommand{\UseCaseModele}[1]{\UseCaseChapter{Controle qualite: cohrence du modele \\}{#1}}
-\newcommand{\UseCaseEntreModele}[1]{\UseCaseChapter{Controle qualite: coherence entre les modeles \\}{#1}}
-
-\newcommand{\UseCaseTextuelle}[1]{\UseCaseEntry{Contexte : \\}{#1} \\}
-
-\newenvironment{UseCaseList}[1]{
-    \UseCaseEntry{#1}{}
-    \setenumerate[1]{label={\arabic*.}}
-    \setenumerate[2]{label={\arabic*.}}
-}{
-}
-\newenvironment{UseCasePre}{\begin{UseCaseList}{Pré-condition(s) :}}{\end{UseCaseList}}
-\newenvironment{UseCasePost}{\begin{UseCaseList}{Post-condition(s) :}}{\end{UseCaseList}}
-\newenvironment{UseCaseScenario}{\begin{UseCaseList}{Scénario Principal :}}{\end{UseCaseList}}
-
-\newenvironment{UseCaseExtension}{
-    \begin{UseCaseList}{Extensions :}
-}{
-    \end{UseCaseList}
-}
-
-\newcommand{\MakeUseCase}[8]{
-    \begin{UseCase}
-        \UseCaseDescription{#1}
-        \UseCaseTextuelle{#2}
-        \begin{UseCasePre}
-            #3
-        \end{UseCasePre}
-        \begin{UseCasePost}
-            #4
-        \end{UseCasePost}
-        \begin{UseCaseScenario}
-            #5
-        \end{UseCaseScenario}
-        \begin{UseCaseExtension}
-            #6
-        \end{UseCaseExtension}
-				\UseCaseModele{#7}
-				\UseCaseEntreModele{#8}
-    \end{UseCase}
-}
-
+\newcommand{\LQText}[1]{\LQEntry{Description textuelle : \\}{#1} \\}
 
 \begin{document}
 
-\Document{Documentation sur la Qualite}
-\UseCaseInput{CdU}
-\UseCaseInput{MdE}
-\UseCaseInput{MdC}
-\UseCaseInput{MdP}
-\UseCaseInput{MdO}
+\Document{Documentation sur la Qualité}
+
+\LQInput{CdU}
+\LQInput{MdE}
+\LQInput{MdC}
+\LQInput{MdP}
+\LQInput{MdO}
 
 \end{document}

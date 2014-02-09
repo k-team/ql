@@ -1,15 +1,22 @@
-\begin{UseCase}{Modèle des Concepts}
+\begin{LQ}{Modèle des Concepts}
 
-\UseCasDescription{
-Le modèle des concepts reprend exactement le modèle de l’environnement, en ne se focalisant non plus sur les messages circulant entre les acteurs et le système (qui ne sont plus représentés), mais en identifiant les concepts du système. Celui ci n’est plus une boîte noire. Il est représenté par une sorte de diagramme de classe, chaque classe représentant un concept.
-} 
-
-\UseCaseModele{
-Un MdC découle un MdE donc on a autant de MdC que de MdE. Ils utilisent les même acteurs et donc la convention de nommage utilisée pour le MdE doit être la même pour le MdC
+\LQDescription{
+    Le modèle des concepts reprend exactement le modèle de l'environnement, en
+    ne se focalisant non plus sur les messages circulant entre les acteurs et
+    le système (qui ne sont plus représentés), mais en identifiant les concepts
+    du système. Celui ci n'est plus une boîte noire. Il est représenté par une
+    sorte de diagramme de classe, chaque classe représentant un concept.
 }
 
-\UseCaseEntreModele{
-Si un acteur se retrouve dans plusieurs MdC, il doit conserver la même cardinalité.
+\LQModel{
+    Un MdC découle un MdE donc on a autant de MdC que de MdE. Ils utilisent les
+    même acteurs et donc la convention de nommage utilisée pour le MdE doit
+    être la même pour le MdC
 }
 
-\end{UseCase}
+\LQBetweenModels{
+    Si un acteur se retrouve dans plusieurs MdC, il doit conserver la même
+    cardinalité.
+}
+
+\end{LQ}
