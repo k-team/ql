@@ -1,29 +1,23 @@
-\begin{UseCase}{Modèle du Protocole}
+\begin{UseCase}{ModÃ¨le du Protocole}
 
 \UseCasDescription{
-Le MdP découle du MdC et MdE. Les 3 modèles se focalisent sur le même système. Le MdP est le un diagramme d’état - transistion. On décrit les états du sytèmes et les transistions pour passer d’un état à un autre.
-
+Le MdP dÃ©coule du MdC et MdE. Les 3 modÃ¨les se focalisent sur le mÃªme systÃ¨me. Le MdP est le un diagramme dâ€™Ã©tat - transistion. On dÃ©crit les Ã©tats du sytÃ¨mes et les transistions pour passer dâ€™un Ã©tat Ã  un autre.
 } 
 
 \UseCaseModele{
-Chaque changement d’état est induit par un message. Ce qu’il veut dire que l’on passe d’un état à un autre que si cela est déterminer par une action. Le non determinisme est à proscrire ou à limiter fortement dans ce modèle.\\
+Chaque changement dâ€™Ã©tat est induit par un message. Ce quâ€™il veut dire que lâ€™on passe dâ€™un Ã©tat Ã  un autre que si cela est dÃ©terminer par une action. Le non determinisme est Ã  proscrire ou Ã  limiter fortement dans ce modÃ¨le.\\
 
-Chaque sous-système doit être décrit dans un modèle de protocole, et tous ses états doivent y être décrits. On a donc un MdP pour chaque MdC( et a fortiori pour chaque MdE). Chaque message provient d’une interaction et le système utilisé pour le MdE.\\
+Chaque sous-systÃ¨me doit Ãªtre dÃ©crit dans un modÃ¨le de protocole, et tous ses Ã©tats doivent y Ãªtre dÃ©crits. On a donc un MdP pour chaque MdC( et a fortiori pour chaque MdE). Chaque message provient dâ€™une interaction et le systÃ¨me utilisÃ© pour le MdE.\\
 
-Un transition qui sur son état d’origine signifie pas que le système n’a pas evoluer. Dans l’exemple, l’action “MonnaieInsérée”  permet d'incrémenter la variable “argentIntroduit” (par exemple). \\
+Un transition qui sur son Ã©tat dâ€™origine signifie pas que le systÃ¨me nâ€™a pas evoluer. Dans lâ€™exemple, lâ€™action â€œMonnaieInsÃ©rÃ©eâ€  permet d'incrÃ©menter la variable â€œargentIntroduitâ€ (par exemple). \\
 
-Le système ne doit arriver dans un état sans qu’il puisse changer d’état. Il doit avoir “le choix” de passer d’un état à l’autre selon les actions qui l’affecte.\\
-
-
+Le systÃ¨me ne doit arriver dans un Ã©tat sans quâ€™il puisse changer dâ€™Ã©tat. Il doit avoir â€œle choixâ€ de passer dâ€™un Ã©tat Ã  lâ€™autre selon les actions qui lâ€™affecte.\\
 }
 
 \UseCaseEntreModele{
-Chaque sous-système doit être décrit dans un modèle de protocole, et tous ses états doivent y être décrits.\\
-Chaque message provient d’une interaction et le système utilisé pour le MdE.\\
-Les sous-systemes d’un MdP sont les même que ceux des MdC ou MdE
-
-
-
+Chaque sous-systÃ¨me doit Ãªtre dÃ©crit dans un modÃ¨le de protocole, et tous ses Ã©tats doivent y Ãªtre dÃ©crits.\\
+Chaque message provient dâ€™une interaction et le systÃ¨me utilisÃ© pour le MdE.\\
+Les sous-systemes dâ€™un MdP sont les mÃªme que ceux des MdC ou MdE
 }
 
 \end{UseCase}
