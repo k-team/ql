@@ -1,66 +1,68 @@
 \begin{OM}{SystemeBalance}{Système Balance}
+    \begin{OMOperation}{demandeMesure()}{CapteurBalance}{Obtenir Mesure}
+        \begin{OMMessages}
+            \OMMessage{CapteurBalance}{mesure}
+        \end{OMMessages}
+        \OMNoPre
+        \begin{OMPost}
+            if self.assign != none then
+            self.mesure = 0.8 * self.mesure + 0.2 * mesure
+            if self.mesure < self.seuilMin then
+            self.SystemeWeb^alarm(self.quantite)
+            wait(1 minute)
+            self.demandeMesure()
+        \end{OMPost}
+    \end{OMOperation}
 
-\begin{OMOperation}{demandeMesure()}{CapteurBalance}{Obtenir Mesure}
-Messages :
-* CapteurBalance::{mesure}
-\begin{OMPre}
-\end{OMPre}
-\begin{OMPost}
-if self.assign != None then
-self.mesure = 0.8 * self.mesure + 0.2 * mesure
-if self.mesure < self.seuilMin then
-        self.SystemeWeb^alarm(self.quantite)
-wait(1 minute)
-self.demandeMesure()
-\end{OMPost}
-\end{OMOperation}
+    \begin{OMOperation}{scan()}{Système externe}{Installation balance}
+        \begin{OMMessages}
+            \OMMessage{SystèmeExterne}{scan(clé)}
+        \end{OMMessages}
+        \OMNoPre
+        \begin{OMPost}
+            if self.cleClient = cle then
+            sender^confirmScan
+            self.synchro = true
+            self.SystemeWeb = sender
+        \end{OMPost}
+    \end{OMOperation}
 
-\begin{OMOperation}{scan()}{Système externe}{Installation balance}
-Messages :
-* SystèmeExterne::{scan(clé)}
-\begin{OMPre}
-\end{OMPre}
-\begin{OMPost}
-if self.cleClient = cle then
-sender^confirmScan
-self.synchro = True
-self.SystemeWeb = sender
-\end{OMPost}
-\end{OMOperation}
+    \begin{OMOperation}{assignBal()}{Système web}{Assigner un produit à une balance}
+        \begin{OMMessages}
+            \OMMessage{SystèmeWeb}{assignBal(Prod, Seuil, Quantité)}
+        \end{OMMessages}
+        \begin{OMPre}
+            self.synchro = true
+        \end{OMPre}
+        \begin{OMPost}
+            sender = self.SystemeWeb
+            if Seuil >= 0 and Quantite > 0 then
+            self.assign = Prod
+            self.seuilMin = Seuil
+            self.quantite = Quantite
+            self.mesure = 0
+            sender^confirmAssign
+            else
+            sender^errorAssign
+        \end{OMPost}
+    \end{OMOperation}
 
-\begin{OMOperation}{assignBal()}{Système web}{Assigner un produit à une balance}
-Messages :
-* SystèmeWeb::{assignBal(Prod, Seuil, Quantité)}
-\begin{OMPre}
-self.synchro = True
-\end{OMPre}
-\begin{OMPost}
-sender = self.SystemeWeb
-if Seuil >= 0 and Quantite > 0 then
-self.assign = Prod
-self.seuilMin = Seuil
-self.quantite = Quantite and
-self.mesure = 0
-sender^confirmAssign
-else
-        sender^errorAssign
-    \end{OMPost}
-\end{OMOperation}
-
-\begin{OMOperation}{configBal()}{Système web}{Modifier un paramètre d'une balance}
-Messages :
-* SystèmeWeb::{configBal(Seuil, Quantité)}
-\begin{OMPre}
-self.synchro = True and self.produit != None
-\end{OMPre}
-\begin{OMPost}
-if Seuil >= 0 and Quantite > 0 then
-self.seuilMin = Seuil
-and self.quantite = Quantite and
-self.mesure = 0
-sender^confirmConfig
-else
-        sender^errorConfig
-    \end{OMPost}
-\end{OMOperation}
+    \begin{OMOperation}{configBal()}{Système web}{Modifier un paramètre d'une balance}
+        \begin{OMMessages}
+            \OMMessage{SystèmeWeb}{configBal(Seuil, Quantité)}
+        \end{OMMessages}
+        \begin{OMPre}
+            self.synchro = true
+            self.produit != none
+        \end{OMPre}
+        \begin{OMPost}
+            if Seuil >= 0 and Quantite > 0 then
+            self.seuilMin = Seuil
+            self.quantite = Quantite
+            self.mesure = 0
+            sender^confirmConfig
+            else
+            sender^errorConfig
+        \end{OMPost}
+    \end{OMOperation}
 \end{OM}

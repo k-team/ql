@@ -18,33 +18,46 @@
 }
 
 \newenvironment{OMOperation}[3]{
-    \subsection{Opération : $\OMId::#1$}
+    \subsection{#1}
 
-    Acteur du MdE : #2 \\
-    Cas d'utilisation : #3 \\
+    {\large Description de l'opération $\OMId::#1$ : \\}
+
+    \textbf{Acteur du MdE :} #2 \\
+    \textbf{Cas d'utilisation :} #3 \\
 }{
 }
 
+\newcommand{\OMMessagesBegin}{\textbf{Messages :}}
+\newcommand{\OMMessagesEnd}{}
+\newcommand{\OMNoMessages}{\OMMessagesBegin aucuns \\}
 \newenvironment{OMMessages}{
-    Messages :
-
+    \OMMessagesBegin
     \begin{itemize}
 }{
     \end{itemize}
+    \OMMessagesEnd
 }
 
 \newcommand{\OMMessage}[2]{
-    \item[*] #1::\{#2\}
+    \item[*] {#1}::\{#2\}
 }
 
-\lstnewenvironment{OMPre}{
-    Pré-conditions :
+\newcommand{\OMPreBegin}{\textbf{Pré-conditions :}}
+\newcommand{\OMPreEnd}{}
+\newcommand{\OMNoPre}{\OMPreBegin aucunes \\}
+\lstnewenvironment{OMPre}[1][]{
+    \OMPreBegin
 }{
+    \OMPreEnd
 }
 
+\newcommand{\OMPostBegin}{\textbf{Post-conditions :}}
+\newcommand{\OMPostEnd}{}
+\newcommand{\OMNoPost}{\OMPostBegin aucunes \\}
 \lstnewenvironment{OMPost}{
-    Post-conditions :
+    \OMPostBegin
 }{
+    \OMPostEnd
 }
 
 \begin{document}
