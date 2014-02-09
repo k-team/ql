@@ -5,7 +5,7 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.ecranSupervision^visualiserDrones()
+self.ecranSupervision^visualiserDrones()
         \end{OMPost}
     \end{OMOperation}
 
@@ -15,29 +15,29 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.ecranSupervision^visualiserTournees()
+self.ecranSupervision^visualiserTournees()
         \end{OMPost}
     \end{OMOperation}
 
     \begin{OMOperation}{envoyerCommande(cde : Commande)}{Livrer une tournée}{}
         \begin{OMMessages}
-            \OMMessage{BD}{ajouterCommande,calculerTournées}
+            \OMMessage{BD}{ajouterCommande, calculerTournées}
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.bd^ajouterCommande(cde)
-            self.bd^calculerTournees()
+self.bd^ajouterCommande(cde)
+self.bd^calculerTournees()
         \end{OMPost}
     \end{OMOperation}
 
     \begin{OMOperation}{annulerCommade(lst : ListeCommande)}{Livrer une tournée}{}
         \begin{OMMessages}
-            \OMMessage{BD}{supprimerCommande,calculerTournees}
+            \OMMessage{BD}{supprimerCommande, calculerTournees}
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.bd^supprimerCommande(lst)
-            self.bd^calculerTournees()
+self.bd^supprimerCommande(lst)
+self.bd^calculerTournees()
         \end{OMPost}
     \end{OMOperation}
 
@@ -49,10 +49,10 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.bd^supprimerCommande(sender.tournee.lstCommande)
-            sender.tournee.drone^envoyerDrone()
-            self.boiteMail^envoyerMessage(sender.tournee.drone.id,DEPART_DRONE)
-            sender.tournee.drone.oclInState(Livraison)
+self.bd^supprimerCommande(sender.tournee.lstCommande)
+sender.tournee.drone^envoyerDrone()
+self.boiteMail^envoyerMessage(sender.tournee.drone.id, DEPART_DRONE)
+sender.tournee.drone.oclInState(Livraison)
         \end{OMPost}
     \end{OMOperation}
 
@@ -63,8 +63,8 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.bd^majPositionDrone(sender.drone.id, p)
-            self.ecranSupervision^visualiserDrone()
+self.bd^majPositionDrone(sender.drone.id, p)
+self.ecranSupervision^visualiserDrone()
         \end{OMPost}
     \end{OMOperation}
 
@@ -74,7 +74,7 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.bd^supprimerCommande(cde)
+self.bd^supprimerCommande(cde)
         \end{OMPost}
     \end{OMOperation}
 
@@ -85,9 +85,9 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            sender.drone.oclInState(Erreur)
-            self.bd.majEtatDrone(sender.drone.id, a)
-            self.boiteMail^envoyerMessage(sender.drone.id, a)
+sender.drone.oclInState(Erreur)
+self.bd.majEtatDrone(sender.drone.id, a)
+self.boiteMail^envoyerMessage(sender.drone.id, a)
         \end{OMPost}
     \end{OMOperation}
 
@@ -98,9 +98,9 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.bd.majEtatDrone(sender.drone.id,PRET)
-            self.boiteMail^envoyerMessage(sender.drone.id,RETOUR)
-            sender.drone.oclInState(Inactif)
+self.bd.majEtatDrone(sender.drone.id, PRET)
+self.boiteMail^envoyerMessage(sender.drone.id, RETOUR)
+sender.drone.oclInState(Inactif)
         \end{OMPost}
     \end{OMOperation}
 
@@ -111,13 +111,13 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.bd.majEtatDrone(idDrone,BON_ETATt)
-            if sender.drone.Tournee.lstCommandes is null
-            sender.drone.oclInState(Inactif)
-            self.bd.majEtatDrone(idDrone,Pret)
-            else
-            sender.drone.oclInState(Livraison)
-            self.sender^envoyerDrone()
+self.bd.majEtatDrone(idDrone, BON_ETAT)
+if sender.drone.Tournee.lstCommandes = none
+    sender.drone.oclInState(Inactif)
+    self.bd.majEtatDrone(idDrone, Pret)
+else
+    sender.drone.oclInState(Livraison)
+    self.sender^envoyerDrone()
         \end{OMPost}
     \end{OMOperation}
 \end{OM}

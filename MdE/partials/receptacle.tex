@@ -1,7 +1,7 @@
 \begin{EM}{Réceptacle}
     \EMActor{PaveNum}{Pavé numérique type standard, composé de chiffres (valeur
         allant de 0 à 9), d'un bouton "valider", et d'un bouton "annuler".}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Utilisateur}
         \EMOperation{rentrerCode(n)}{Le code $n$ est vérifié.}{}
         \EMOperation{modifierCode(n)}{Le code $n$ est fixé en tant que nouveau
             code.}{}
@@ -9,13 +9,13 @@
 
     \EMActor{capteurBadge}{Capteur de badge pour détecter la présence du badge de
         l'utilisateur (ou celui du technicien).}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Utilisateur}
         \EMOperation{vérificationBadge(b)}{La valeur du badge est vérifiée.}{}
     \end{EMUCActor}
 
     \EMActor{diode}{Diode pouvant prendre une couleur verte ou rouge pendant un
         temps donné.}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Utilisateur}
         \EMOperation{diodeVerte()}{Demande à la diode de devenir verte pour 3
             secondes.}{}
         \EMOperation{diodeRouge()}{Demande à la diode de devenir rouge pour 3
@@ -24,7 +24,7 @@
 
     \EMActor{panneauAffichage}{Panneau d'affichage pour l'affichage d'informations
         générales sur l'état du système.}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Utilisateur}
         \EMOperation{msgAccueil()}{Demande d'affichage du message d'accueil.}{}
         \EMOperation{msgCodeIncorrect(e)}{Si $e$ est vrai, demande d'affichage d'un
             message indiquant que le code rentré est incorrect. Sinon, demande du
@@ -36,7 +36,7 @@
         \EMOperation{msgHorsService(e)}{Similaire à $msgCodeIncorrect(e)$.}{}
     \end{EMUCActor}
 
-    \EMActor{supportDrone}{}
+    \EMActor{supportDrone}{Drone}
     \begin{EMUCActor}{}
         \EMOperation{dronePresent()}{Le support indique que le drône est présent.}{}
         \EMOperation{bloquerDrone(e)}{Si $e$ est vrai, une demande est envoyée au
@@ -46,7 +46,7 @@
 
     \EMActor{porteLaterale}{Porte latérale du réceptacle, utilisée par le
         client pour récupérer les colis. Ne peut être ouverte que manuellement.}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Utilisateur}
         \EMOperation{porteFerme()}{Signale au réceptacle que la porte vient d'être
             fermée.}{}
         \EMOperation{bloquerPorte()}{Demande du réceptacle de bloquer la porte
@@ -58,7 +58,7 @@
     \EMActor{panneauSuperieur}{Panneau supérieur du réceptacle, utilisé par le
         drone pour déposer les colis. Peut être ouverte électroniquement ou
         manuellement.}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Drone}
         \EMOperation{panneauFerme()}{Signale au réceptacle que le panneau supérieur
             vient d'être fermé.}{}
         \EMOperation{bloquerPanneau()}{Demande du réceptacle de bloquer le panneau
@@ -73,14 +73,14 @@
 
     \EMActor{capteurRFID}{Un capteur RFID permettant de vérifier la présence d'un
         colis à l'intérieur du réceptacle.}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{aucun}
         \EMOperation{colisPresent()}{Le capteur indique s'il a détecté la présence
             d'un colis à l'intérieur du réceptacle.}{}
     \end{EMUCActor}
 
     \EMActor{systemeDrone}{Correspond au système du drone en liaison avec le
         réceptacle.}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Drone}
         \EMOperation{verificationColis(idDestinataire)}{Signal du drone demandant
             la vérification de la correspondance entre un colis et le
             réceptacle.}{}
@@ -104,7 +104,7 @@
     \end{EMUCActor}
 
     \EMActor{systemeClient}
-    \begin{EMUCActor}{}
+    \begin{EMUCActor}{Système web}
         \EMOperation{signalerReception()}{Signal du réceptacle au système client
             pour indiquer qu'il y a un colis à récupérer dans le réceptacle.}{}
     \end{EMUCActor}

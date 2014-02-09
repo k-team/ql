@@ -5,12 +5,12 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            if self.assign != none then
-            self.mesure = 0.8 * self.mesure + 0.2 * mesure
-            if self.mesure < self.seuilMin then
-            self.SystemeWeb^alarm(self.quantite)
-            wait(1 minute)
-            self.demandeMesure()
+if self.assign != none then
+    self.mesure = 0.8 * self.mesure + 0.2 * mesure
+    if self.mesure < self.seuilMin then
+        self.SystemeWeb^alarm(self.quantite)
+wait(1 minute)
+self.demandeMesure()
         \end{OMPost}
     \end{OMOperation}
 
@@ -20,10 +20,10 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            if self.cleClient = cle then
-            sender^confirmScan
-            self.synchro = true
-            self.SystemeWeb = sender
+if self.cleClient = cle then
+    sender^confirmScan
+    self.synchro = true
+    self.SystemeWeb = sender
         \end{OMPost}
     \end{OMOperation}
 
@@ -32,18 +32,18 @@
             \OMMessage{SystèmeWeb}{assignBal(Prod, Seuil, Quantité)}
         \end{OMMessages}
         \begin{OMPre}
-            self.synchro = true
+self.synchro = true
         \end{OMPre}
         \begin{OMPost}
-            sender = self.SystemeWeb
-            if Seuil >= 0 and Quantite > 0 then
-            self.assign = Prod
-            self.seuilMin = Seuil
-            self.quantite = Quantite
-            self.mesure = 0
-            sender^confirmAssign
-            else
-            sender^errorAssign
+sender = self.SystemeWeb
+if Seuil >= 0 and Quantite > 0 then
+    self.assign = Prod
+    self.seuilMin = Seuil
+    self.quantite = Quantite
+    self.mesure = 0
+    sender^confirmAssign
+else
+    sender^errorAssign
         \end{OMPost}
     \end{OMOperation}
 
@@ -52,17 +52,17 @@
             \OMMessage{SystèmeWeb}{configBal(Seuil, Quantité)}
         \end{OMMessages}
         \begin{OMPre}
-            self.synchro = true
-            self.produit != none
+self.synchro = true
+self.produit != none
         \end{OMPre}
         \begin{OMPost}
-            if Seuil >= 0 and Quantite > 0 then
-            self.seuilMin = Seuil
-            self.quantite = Quantite
-            self.mesure = 0
-            sender^confirmConfig
-            else
-            sender^errorConfig
-        \end{OMPost}
+if Seuil >= 0 and Quantite > 0 then
+    self.seuilMin = Seuil
+    self.quantite = Quantite
+    self.mesure = 0
+    sender^confirmConfig
+else
+    sender^errorConfig
+\end{OMPost}
     \end{OMOperation}
 \end{OM}
