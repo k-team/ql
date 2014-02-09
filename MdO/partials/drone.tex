@@ -2,15 +2,15 @@
     \begin{OMOperation}{verificationColisActuel(idColis : IdRFID)}{listeColis}{Livrer une commande}
         \begin{OMMessages}
             \OMMessage{systeReceptacle}{verificationColis}
-            \OMMessage{ListeTimers}{enclanchementTimer}
+            \OMMessage{ListeTimers}{enclenchementTimer}
         \end{OMMessages}
         \begin{OMPre}
-            self.receptacleConnecte != 0
+self.receptacleConnecte != 0
         \end{OMPre}
         \begin{OMPost}
-            self.systeReceptacle^verificationColis(self.listeColis[idColis].idDestinataire)
-            timeInfo.command = EnumCommand::verificationColis
-            self.ListeTimers^enclanchementTimer(timerInfo)
+self.systeReceptacle^verificationColis(self.listeColis[idColis].idDestinataire)
+timeInfo.command = EnumCommand::verificationColis
+self.ListeTimers^enclenchementTimer(timerInfo)
         \end{OMPost}
     \end{OMOperation}
 
@@ -19,11 +19,11 @@
             \OMMessage{systèmeRonde}{SignalementErreur}
         \end{OMMessages}
         \begin{OMPre}
-            self.receptacleConnecte != 0
+self.receptacleConnecte != 0
         \end{OMPre}
         \begin{OMPost}
-            self.systemeRonde^SignalementErreur("ReceptaclePlein")
-            self.etat = EnCirculation
+self.systemeRonde^SignalementErreur("ReceptaclePlein")
+self.etat = EnCirculation
         \end{OMPost}
     \end{OMOperation}
 
@@ -32,21 +32,21 @@
             \OMMessage{systemeReceptacle}{ouverturePanneau}
         \end{OMMessages}
         \begin{OMPre}
-            self.receptacleConnecte != 0
+self.receptacleConnecte != 0
         \end{OMPre}
         \begin{OMPost}
-            self.systemeReceptacle^ouverturePanneau()
+self.systemeReceptacle^ouverturePanneau()
         \end{OMPost}
     \end{OMOperation}
 
     \begin{OMOperation}{signalReceptacle(idReceptacle : IdRFID)}{SystemeReceptacle}{Livrer une commande}
         \OMNoMessages
         \begin{OMPre}
-            self.receptacleConnecte = 0
+self.receptacleConnecte = 0
         \end{OMPre}
         \begin{OMPost}
-            self.receptacleConnecte = idReceptacle
-            self.etat = LivraisonEnCours
+self.receptacleConnecte = idReceptacle
+self.etat = LivraisonEnCours
         \end{OMPost}
     \end{OMOperation}
 
@@ -55,10 +55,10 @@
             \OMMessage{ListeTimers}{desactiverTimer}
         \end{OMMessages}
         \begin{OMPre}
-            self.receptacleConnecte != 0
+self.receptacleConnecte != 0
         \end{OMPre}
         \begin{OMPost}
-            self.ListeTimers^desactiverTimer(msg)
+self.ListeTimers^desactiverTimer(msg)
         \end{OMPost}
     \end{OMOperation}
 
@@ -69,9 +69,9 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            if ListeTimers[idTimer].command = FermetureTrappe then
-            self.trappe^activerSystUgence()
-            self.systemeRonde^ SignalementErreur( ListeTimers[idTimer].command )
+if ListeTimers[idTimer].command = FermetureTrappe then
+    self.trappe^activerSystUgence()
+self.systemeRonde^SignalementErreur( ListeTimers[idTimer].command )
         \end{OMPost}
     \end{OMOperation}
 
@@ -79,10 +79,9 @@
         \begin{OMMessages}
             \OMMessage{ListeColis}{getCurColis}
         \end{OMMessages}
-        \begin{OMPre}
-        \end{OMPre}
+        \OMNoPre
         \begin{OMPost}
-            self.ListeColis^getCurColis()
+self.ListeColis^getCurColis()
         \end{OMPost}
     \end{OMOperation}
 
@@ -90,7 +89,7 @@
         \OMNoMessages
         \OMNoPre
         \begin{OMPost}
-            self.etat = EnCirculation
+self.etat = EnCirculation
         \end{OMPost}
     \end{OMOperation}
 \end{OM}
