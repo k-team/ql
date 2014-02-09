@@ -14,17 +14,17 @@ Pré :
 Post : 
         if not(self.commande.estCommandeVide) then
                 self.panneauInformation^afficherCommande(self.commande) 
-and
-                self.panneauInformation^afficherFacture(self.commande, 
-self.commande.prixTotal) 
-and
+                and
+                self.panneauInformation^afficherFacture(self.commande, self.commande.prixTotal) 
+                and
                 self.commande.estCommandeValidée = false 
-and
+                and
                 if not(self.commande.article.estDisponible) then
                         self.panneauInformation^produitNonDispo( self.commande.article, true)
                 else
                         self.panneauInformation^produitNonDispo( self.commande.article, false)
-
+                endif
+        endif
 
 
 
@@ -39,37 +39,38 @@ Post :
         if art.estDisponible then
                 if self.commande.estCommandeVide then
                         self.commande.estCommandeVide = false 
-and
-self.commande.article = art 
-and
-self.commande.prixTotal = art.prixArticle * qte
+                        and
+                        self.commande.article = art 
+                        and
+                        self.commande.prixTotal = art.prixArticle * qte
                 else
                         if art == self.commande.article then 
                                 self.commande.article.estDisponible = true 
-and 
-                                self.panneauInformation^produitNonDispo( 
-self.commande.article, false) 
-and
-                                self.commande.article.qteArticle = 
-self.commande.article.qteArticle@pre + qte
+                                and 
+                                self.panneauInformation^produitNonDispo( self.commande.article, false) 
+                                and
+                                self.commande.article.qteArticle = self.commande.article.qteArticle@pre + qte
+                        endif
                         and
-self.commande.prixTotal = self.commande.prixTotal@pre + 
-art.prixArticle * qte
+                        self.commande.prixTotal = self.commande.prixTotal@pre + art.prixArticle * qte
                         and
                         self.commande.estCommandeVide = false
+                endif
                 and
                 self.commande^majCommande()
         else
                 if self.commande.estCommandeVide then
                         self.panneauInformation^produitNonDispo(art, true)
                 else
-if art == self.article then 
-        self.commande.article.estDisponible = false 
-and
-                                self.panneauInformation^produitNonDispo(
-self.commande.article, true)
+                        if art == self.article then 
+                                self.commande.article.estDisponible = false 
+                                and
+                                self.panneauInformation^produitNonDispo(self.commande.article, true)
+                        endif
+                endif
                 and
                 self.commande^majCommande()
+        endif
         
 
 
@@ -82,8 +83,9 @@ Pré :
 Post :  
         if self.commande.article == art then
                 self.commande.article.estDisponible = false 
-and
+                and
                 self.panneauInformation^produitNonDispo(self.commande.article, true)
+        endif
 
 
 
@@ -91,9 +93,8 @@ Opération : SystèmeWeb::listeProduit()
 Acteur du MdE : InterfaceCatalogue
 CdU : MAJ d’une commande
 Messages :
-* //a voir
 Pré :
-Post :  // a voir
+Post :  self.commande^majCommande()
 
 
 
@@ -105,19 +106,19 @@ Messages :
 * ListeCommande::{majCommande}
 Pré :
 Post :  
-if not(self.commande.estCommandeVide) then
-        self.panneauInformation^afficherCommande(self.commande) 
-and
-self.panneauInformation^afficherFacture(self.commande, 
-self.commande.prixTotal) 
-and
+        if not(self.commande.estCommandeVide) then
+                self.panneauInformation^afficherCommande(self.commande) 
+                and
+                self.panneauInformation^afficherFacture(self.commande, self.commande.prixTotal) 
+                and
                 self.commande.estCommandeValidée = true 
-and 
+                and 
                 self.panneauInformation^commandeValidée(true) 
-and
+                and
                 self.commande^majCommande()
         else 
                 self.panneauInformation^commandeValidée(false)
+        endif
 
 
 
@@ -130,18 +131,20 @@ Messages :
 * ListeCommande::{majCommande}
 Pré :
 Post :  
-if not(self.commande.estCommandeVide) then
+        if not(self.commande.estCommandeVide) then
                 self.panneauInformation^afficherCommande(self.commande) 
-and
+                and
                 self.panneauInformation^commandeValidée(false) 
-and
+                and
                 if art==self.commande.article then
-                        self.commande.prixTotal = self.commande.prixTotal@pre + (qte - 
-self.commande.article.qteArticle) * art.prixArticle
-and
+                        self.commande.prixTotal = self.commande.prixTotal@pre + 
+                                (qte - self.commande.article.qteArticle) * art.prixArticle
+                        and
                         self.commande.article.qteArticle =qte
+                endif
                 and 
                 self.commande^majCommande()
+        endif
                 
 
 
@@ -153,22 +156,25 @@ Messages :
 * ListeCommande::{majCommande}
 Pré :
 Post :  
-if not(self.commande.estCommandeVide) then
+        if not(self.commande.estCommandeVide) then
                 self.panneauInformation^afficherCommande(self.commande) 
-and
+                and
                 self.panneauInformation^commandeValidée(false) 
-and
+                and
                 if art==self.commande.article then
                         if self.commande.article.estCoché then
                                 self.commande.article.estCoché = false
                                 self.commande.prixTotal = self.commande.prixTotal@pre - 
-self.commande.article.qteArticle * art.prixArticle
+                                        self.commande.article.qteArticle * art.prixArticle
                         else 
                                 self.commande.article.estCoché = true
                                 self.commande.prixTotal = self.commande.prixTotal@pre + 
-self.commande.article.qteArticle * art.prixArticle
+                                        self.commande.article.qteArticle * art.prixArticle
+                        endif
                         and 
                         self.commande^majCommande()
+                endif
+        endif
 
 
 
@@ -184,8 +190,11 @@ Post :
                 if seuil <= 0 then
                         if qte <=0 then
                                 self.panneau.information^erreurConfigBal()
+                        endif
+                endif
         else
                 self.panneauInformation^confirmConfigBal()
+        endif
 
 
 Opération : SystèmeWeb::assignBal(bal:Balance, art:Article, seuil:Seuil, qte:Quantité)
@@ -202,5 +211,11 @@ and
                         if seuil <= 0 then
                                 if qte <=0 then
                                         self.panneau.information^erreurAssignBal()
+                                endif
+                        endif
+                endif
         else
                 self.panneauInformation^confirmAssignBal()
+        endif
+        
+        
