@@ -6,6 +6,17 @@
     états du sytèmes et les transistions pour passer d'un état à un autre.
 }
 
+\LQSchema{
+Chaque état du système est représenté par un rectangle avec un choix de nom très précis et clair pour une bonne compréhension. Les transistions se font d’un état A à un état B et sont représentés par des fleches. Une transistions peut aussi se faire d’un état A vers un état A également. Une transistion n’est possible que si elle respecte une condition. Cette condition équivaut à une action du MdE.
+
+}
+
+\begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{../images/MdP.png}
+   \caption{Schéma du modèle du protocole}
+\end{figure}
+
 \LQModel{
     Chaque changement d'état est induit par un message. Ce qu'il veut dire que
     l'on passe d'un état à un autre que si cela est déterminer par une action.
