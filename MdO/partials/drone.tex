@@ -1,94 +1,96 @@
 \begin{OM}{Drone}{Drone}
+    \begin{OMOperation}{verificationColisActuel(idColis : IdRFID)}{listeColis}{Livrer une commande}
+        \begin{OMMessages}
+            \OMMessage{systeReceptacle}{verificationColis}
+            \OMMessage{ListeTimers}{enclanchementTimer}
+        \end{OMMessages}
+        \begin{OMPre}
+            self.receptacleConnecte != 0
+        \end{OMPre}
+        \begin{OMPost}
+            self.systeReceptacle^verificationColis(self.listeColis[idColis].idDestinataire)
+            timeInfo.command = EnumCommand::verificationColis
+            self.ListeTimers^enclanchementTimer(timerInfo)
+        \end{OMPost}
+    \end{OMOperation}
 
-\begin{OMOperation}{verificationColisActuel(idColis : IdRFID)}{listeColis}{Livrer une commande}
-Messages :
-* systeReceptacle::{verificationColis}
-* ListeTimers::{enclanchementTimer}
-\begin{OMPre}
-self.receptacleConnecte <> 0
-\end{OMPre}
-\begin{OMPost}
-        self.systeReceptacle^verificationColis(self.listeColis[idColis].idDestintaire)
-        timeInfo.command := EnumCommand::verificationColis
-        self.ListeTimers^enclanchementTimer(timerInfo)
-    \end{OMPost}
-\end{OMOperation}
+    \begin{OMOperation}{receptaclePlein()}{SystemeReceptacle}{Livrer une commande}
+        \begin{OMMessages}
+            \OMMessage{systèmeRonde}{SignalementErreur}
+        \end{OMMessages}
+        \begin{OMPre}
+            self.receptacleConnecte != 0
+        \end{OMPre}
+        \begin{OMPost}
+            self.systemeRonde^SignalementErreur("ReceptaclePlein")
+            self.etat = EnCirculation
+        \end{OMPost}
+    \end{OMOperation}
 
-\begin{OMOperation}{receptaclePlein()}{SystemeReceptacle}{Livrer une commande}
-Messages :
-* systèmeROnde::{SignalementErreur}
-\begin{OMPre}
-self.receptacleConnecte <> 0
-\end{OMPre}
-\begin{OMPost}
-        self.systemeRonde^SignalementErreur("ReceptaclePlein")
-self.etat := EnCirculation
-\end{OMPost}
-\end{OMOperation}
+    \begin{OMOperation}{colisCorrect(e : bool)}{SystemeReceptacle}{Livrer une commande}
+        \begin{OMMessages}
+            \OMMessage{systemeReceptacle}{ouverturePanneau}
+        \end{OMMessages}
+        \begin{OMPre}
+            self.receptacleConnecte != 0
+        \end{OMPre}
+        \begin{OMPost}
+            self.systemeReceptacle^ouverturePanneau()
+        \end{OMPost}
+    \end{OMOperation}
 
-\begin{OMOperation}{colisCorrect(e : bool)}{SystemeReceptacle}{Livrer une commande}
-Messages :
-* systemeReceptacle::{ouverturePanneau}
-\begin{OMPre}
-self.receptacleConnecte <> 0
-\end{OMPre}
-\begin{OMPost}
-        self.systemeReceptacle^ouverturePanneau()
-    \end{OMPost}
-\end{OMOperation}
+    \begin{OMOperation}{signalReceptacle(idReceptacle : IdRFID)}{SystemeReceptacle}{Livrer une commande}
+        \OMNoMessages
+        \begin{OMPre}
+            self.receptacleConnecte = 0
+        \end{OMPre}
+        \begin{OMPost}
+            self.receptacleConnecte = idReceptacle
+            self.etat = LivraisonEnCours
+        \end{OMPost}
+    \end{OMOperation}
 
-\begin{OMOperation}{signalReceptacle(idReceptacle : IdRFID)}{SystemeReceptacle}{Livrer une commande}
-Messages : -
-\begin{OMPre}
-self.receptacleConnecte == 0
-\end{OMPre}
-\begin{OMPost}
-        self.receptacleConnecte == idReceptacle
-        self.etat := LivraisonEnCours
-    \end{OMPost}
-\end{OMOperation}
+    \begin{OMOperation}{sendConfirmation(msg : ConfirmMsg)}{SystemeReceptacle}{Livrer une commande}
+        \begin{OMMessages}
+            \OMMessage{ListeTimers}{desactiverTimer}
+        \end{OMMessages}
+        \begin{OMPre}
+            self.receptacleConnecte != 0
+        \end{OMPre}
+        \begin{OMPost}
+            self.ListeTimers^desactiverTimer(msg)
+        \end{OMPost}
+    \end{OMOperation}
 
-\begin{OMOperation}{sendConfirmation(msg : ConfirmMsg)}{SystemeReceptacle}{Livrer une commande}
-Messages :
-* ListeTimers::{desactiverTimer}
-\begin{OMPre}
-self.receptacleConnecte <> 0
-\end{OMPre}
-\begin{OMPost}
-        self.ListeTimers^desactiverTimer(msg)
-    \end{OMPost}
-\end{OMOperation}
+    \begin{OMOperation}{expirationTimer(idTimer : IdTimer)}{ListeTimer}{Livrer une commande}
+        \begin{OMMessages}
+            \OMMessage{trappe}{activerSystUrgence}
+            \OMMessage{systemeRonde}{SygnalementErreur}
+        \end{OMMessages}
+        \OMNoPre
+        \begin{OMPost}
+            if ListeTimers[idTimer].command = FermetureTrappe then
+            self.trappe^activerSystUgence()
+            self.systemeRonde^ SignalementErreur( ListeTimers[idTimer].command )
+        \end{OMPost}
+    \end{OMOperation}
 
-\begin{OMOperation}{expirationTimer(idTimer : IdTimer)}{ListeTimer}{Livrer une commande}
-Messages :
-* trappe::{activerSystUrgence}
-* systemeRonde::{SygnalementErreur}
-\begin{OMPre}
-\end{OMPre}
-\begin{OMPost}
-        if ListeTimers[idTimer].command = FermetureTrappe then
-                self.trappe^activerSystUgence()
-        fi
-        self.systemeRonde^ SignalementErreur( ListeTimers[idTimer].command )
-    \end{OMPost}
-\end{OMOperation}
+    \begin{OMOperation}{ColisPret()}{tapisRoulant}{Livrer une commande}
+        \begin{OMMessages}
+            \OMMessage{ListeColis}{getCurColis}
+        \end{OMMessages}
+        \begin{OMPre}
+        \end{OMPre}
+        \begin{OMPost}
+            self.ListeColis^getCurColis()
+        \end{OMPost}
+    \end{OMOperation}
 
-\begin{OMOperation}{ColisPret()}{tapisRoulant}{Livrer une commande}
-Messages :
-* ListeColis::{getCurColis}
-\begin{OMPre}
-\end{OMPre}
-\begin{OMPost}
-        self.ListeColis^getCurColis()
-    \end{OMPost}
-\end{OMOperation}
-
-\begin{OMOperation}{EnvoyerDrone(itineraire : ItineraireLivraison)}{SystemeRonde}{Livrer une commande}
-Messages : -
-\begin{OMPre}
-\end{OMPre}
-\begin{OMPost}
-        self.etat := EnCirculation
-    \end{OMPost}
-\end{OMOperation}
+    \begin{OMOperation}{EnvoyerDrone(itineraire : ItineraireLivraison)}{SystemeRonde}{Livrer une commande}
+        \OMNoMessages
+        \OMNoPre
+        \begin{OMPost}
+            self.etat = EnCirculation
+        \end{OMPost}
+    \end{OMOperation}
 \end{OM}
