@@ -7,19 +7,19 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            if n = self.codeAdmin then
-            self.mode = EnumMode::Admin
-            self.porteLaterale^debloquerPorte()
-            self.panneauAffichage^msgModifierCode(true)
-            self.diode^diodeVerte()
-            else if n = self.codeUser then
-            self.mode = EnumMode::User
-            self.porteLaterale^debloquerPorte()
-            self.panneauAffichage^msgModifierCode(true)
-            self.diode^diodeVerte()
-            else
-            self.panneauAffichage^msgCodeIncorrect(true)
-            self.diode^diodeRouge()
+if n = self.codeAdmin then
+    self.mode = EnumMode::Admin
+    self.porteLaterale^debloquerPorte()
+    self.panneauAffichage^msgModifierCode(true)
+    self.diode^diodeVerte()
+else if n = self.codeUser then
+    self.mode = EnumMode::User
+    self.porteLaterale^debloquerPorte()
+    self.panneauAffichage^msgModifierCode(true)
+    self.diode^diodeVerte()
+else
+    self.panneauAffichage^msgCodeIncorrect(true)
+    self.diode^diodeRouge()
         \end{OMPost}
     \end{OMOperation}
 
@@ -28,15 +28,15 @@
             \OMMessage{panneauAffichage}{msgModifiercode}
         \end{OMMessages}
         \begin{OMPre}
-            not(self.porteLaterale.closedState)
+not(self.porteLaterale.closedState)
         \end{OMPre}
         \begin{OMPost}
-            if self.mode = EnumMode::Admin then
-            self.codeAdmin = n
-            self.panneauAffichage^msgModifierCode(false)
-            if self.mode = EnumMode::User then
-            self.codeUser = n
-            self.panneauAffichage^msgModifierCode(false)
+if self.mode = EnumMode::Admin then
+    self.codeAdmin = n
+    self.panneauAffichage^msgModifierCode(false)
+if self.mode = EnumMode::User then
+    self.codeUser = n
+    self.panneauAffichage^msgModifierCode(false)
         \end{OMPost}
     \end{OMOperation}
 
@@ -48,19 +48,19 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            if b = self.idBadgeAdmin then
-            self.mode = EnumMode::Admin
-            self.porteLaterale^debloquerPorte()
-            self.panneauAffichage^msgModifierCode(true)
-            self.diode^diodeVerte()
-            else if b = self.idBadgeUser then
-            self.mode = EnumMode::User
-            self.porteLaterale^debloquerPorte()
-            self.panneauAffichage^msgModifierCode(true)
-            self.diode^diodeVerte()
-            else
-            self.panneauAffichage^msgBadgeIncorrect(true)
-            self.diode^diodeRouge()
+if b = self.idBadgeAdmin then
+    self.mode = EnumMode::Admin
+    self.porteLaterale^debloquerPorte()
+    self.panneauAffichage^msgModifierCode(true)
+    self.diode^diodeVerte()
+else if b = self.idBadgeUser then
+    self.mode = EnumMode::User
+    self.porteLaterale^debloquerPorte()
+    self.panneauAffichage^msgModifierCode(true)
+    self.diode^diodeVerte()
+else
+    self.panneauAffichage^msgBadgeIncorrect(true)
+    self.diode^diodeRouge()
         \end{OMPost}
     \end{OMOperation}
 
@@ -70,10 +70,10 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            if self.id = idDestinataire then
-            self.systemeDrone^colisCorrect(true)
-            else
-            self.systemeDrone^colisCorrect(false)
+if self.id = idDestinataire then
+    self.systemeDrone^colisCorrect(true)
+else
+    self.systemeDrone^colisCorrect(false)
         \end{OMPost}
     \end{OMOperation}
 
@@ -83,12 +83,12 @@
             \OMMessage{systemeDrone}{sendConfirmation}
         \end{OMMessages}
         \begin{OMPre}
-            not(self.panneauSuperieur.lockedState)
+not(self.panneauSuperieur.lockedState)
         \end{OMPre}
         \begin{OMPost}
-            if self.panneauSuperieur^ouvrirPanneau() then
-            self.panneauSuperieur.closedState = false
-            self.systemeDrone^sendConfirmation(ConfirmMsg::PanneauOuvert)
+if self.panneauSuperieur^ouvrirPanneau() then
+    self.panneauSuperieur.closedState = false
+    self.systemeDrone^sendConfirmation(ConfirmMsg::PanneauOuvert)
         \end{OMPost}
     \end{OMOperation}
 
@@ -98,12 +98,12 @@
             \OMMessage{systemeDrone}{sendConfirmation}
         \end{OMMessages}
         \begin{OMPre}
-            not(self.panneauSuperieur.lockedState)
+not(self.panneauSuperieur.lockedState)
         \end{OMPre}
         \begin{OMPost}
-            if self.panneauSuperieur^fermerPanneau() then
-            self.panneauSuperieur.closedState = true
-            self.systemeDrone^sendConfirmation(ConfirmMsg::PanneauFerme)
+if self.panneauSuperieur^fermerPanneau() then
+    self.panneauSuperieur.closedState = true
+    self.systemeDrone^sendConfirmation(ConfirmMsg::PanneauFerme)
         \end{OMPost}
     \end{OMOperation}
 
@@ -113,7 +113,7 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.panneauAffichage^msgHorsService(true)
+self.panneauAffichage^msgHorsService(true)
         \end{OMPost}
     \end{OMOperation}
 
@@ -122,11 +122,11 @@
             \OMMessage{supportDrone}{bloquerDrone}
         \end{OMMessages}
         \begin{OMPre}
-            not(self.supportDrone.lockedState)
+not(self.supportDrone.lockedState)
         \end{OMPre}
         \begin{OMPost}
-            self.supportDrone^bloquerDrone(true)
-            self.supportDrone.lockedState = true
+self.supportDrone^bloquerDrone(true)
+self.supportDrone.lockedState = true
         \end{OMPost}
     \end{OMOperation}
 
@@ -136,8 +136,8 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.porteLaterale^bloquerporte()
-            self.porteLaterale.lockedState = true
+self.porteLaterale^bloquerporte()
+self.porteLaterale.lockedState = true
         \end{OMPost}
     \end{OMOperation}
 
@@ -147,8 +147,8 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            self.panneauSuperieur^bloquerPanneau()
-            self.panneauSuperieur.lockedState = true
+self.panneauSuperieur^bloquerPanneau()
+self.panneauSuperieur.lockedState = true
         \end{OMPost}
     \end{OMOperation}
 
@@ -158,7 +158,7 @@
         \end{OMMessages}
         \OMNoPre
         \begin{OMPost}
-            Self.systemeClient^signalerReception()
+self.systemeClient^signalerReception()
         \end{OMPost}
     \end{OMOperation}
 \end{OM}
