@@ -1,202 +1,151 @@
-﻿Modèle des opérations : sous-système SystèmeWeb
+\begin{OM}{SystemeWeb}{Système Web}
 
-
-
-
-
-
-Opération : SystèmeWeb::voirCommande()
-Acteur du MdE :BtnVoirCommande
-CdU : Valider une commande
-Messages : 
+\begin{OMOperation}{voirCommande()}{BtnVoirCommande}{Valider une commande}
+Messages :
 * PanneauInformation::{afficherCommande, afficherFacture, produitNonDispo}
-Pré :
-Post : 
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         if not(self.commande.estCommandeVide) then
-                self.panneauInformation^afficherCommande(self.commande) 
-and
-                self.panneauInformation^afficherFacture(self.commande, 
-self.commande.prixTotal) 
-and
-                self.commande.estCommandeValidée = false 
-and
+                self.panneauInformation^afficherCommande(self.commande)
+                self.panneauInformation^afficherFacture(self.commande, self.commande.prixTotal)
+                self.commande.estCommandeValidee = false
                 if not(self.commande.article.estDisponible) then
                         self.panneauInformation^produitNonDispo( self.commande.article, true)
                 else
                         self.panneauInformation^produitNonDispo( self.commande.article, false)
+                    \end{OMPost}
+\end{OMOperation}
 
-
-
-
-Opération : SystèmeWeb::alarm(art:Article, qte:Quantité)
-Acteur du MdE : SystèmeBalance
-CdU : MAJ d’une commande
+\begin{OMOperation}{alarm(art : Article, qte : Quantite)}{SystèmeBalance}{MAJ d'une commande}
 Messages :
-* PanneauInformation::{produitNonDispo} 
+* PanneauInformation::{produitNonDispo}
 * ListeCommande::{majCommande}
-Pré :
-Post :  
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         if art.estDisponible then
                 if self.commande.estCommandeVide then
-                        self.commande.estCommandeVide = false 
-and
-self.commande.article = art 
-and
+                        self.commande.estCommandeVide = false
+self.commande.article = art
 self.commande.prixTotal = art.prixArticle * qte
                 else
-                        if art == self.commande.article then 
-                                self.commande.article.estDisponible = true 
-and 
-                                self.panneauInformation^produitNonDispo( 
-self.commande.article, false) 
-and
-                                self.commande.article.qteArticle = 
+                        if art == self.commande.article then
+                                self.commande.article.estDisponible = true
+                                self.panneauInformation^produitNonDispo(
+self.commande.article, false)
+                                self.commande.article.qteArticle =
 self.commande.article.qteArticle@pre + qte
-                        and
-self.commande.prixTotal = self.commande.prixTotal@pre + 
+self.commande.prixTotal = self.commande.prixTotal@pre +
 art.prixArticle * qte
-                        and
                         self.commande.estCommandeVide = false
-                and
                 self.commande^majCommande()
         else
                 if self.commande.estCommandeVide then
                         self.panneauInformation^produitNonDispo(art, true)
                 else
-if art == self.article then 
-        self.commande.article.estDisponible = false 
-and
+if art == self.article then
+        self.commande.article.estDisponible = false
                                 self.panneauInformation^produitNonDispo(
 self.commande.article, true)
-                and
                 self.commande^majCommande()
-        
+            \end{OMPost}
+\end{OMOperation}
 
-
-Opération : SystèmeWeb::produitNonStock(art : Article)
-Acteur du MdE : InterfaceCatalogue
-CdU : MAJ d’une commande
+\begin{OMOperation}{produitNonStock(art : Article)}{InterfaceCatalogue}{MAJ d'une commande}
 Messages :
-* PanneauInformation::{produitNonDispo} 
-Pré :
-Post :  
+* PanneauInformation::{produitNonDispo}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         if self.commande.article == art then
-                self.commande.article.estDisponible = false 
-and
+                self.commande.article.estDisponible = false
                 self.panneauInformation^produitNonDispo(self.commande.article, true)
+            \end{OMPost}
+\end{OMOperation}
 
-
-
-Opération : SystèmeWeb::listeProduit()
-Acteur du MdE : InterfaceCatalogue
-CdU : MAJ d’une commande
+\begin{OMOperation}{validerCommande()}{BtnValiderCommande}{Valider une commande}
 Messages :
-* //a voir
-Pré :
-Post :  // a voir
-
-
-
-Opération : SystèmeWeb::validerCommande()
-Acteur du MdE : BtnValiderCommande
-CdU : Valider une commande
-Messages : 
 * PanneauInformation::{afficherCommande, afficherFacture, commandeValidée}
 * ListeCommande::{majCommande}
-Pré :
-Post :  
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
 if not(self.commande.estCommandeVide) then
-        self.panneauInformation^afficherCommande(self.commande) 
-and
-self.panneauInformation^afficherFacture(self.commande, 
-self.commande.prixTotal) 
-and
-                self.commande.estCommandeValidée = true 
-and 
-                self.panneauInformation^commandeValidée(true) 
-and
+        self.panneauInformation^afficherCommande(self.commande)
+self.panneauInformation^afficherFacture(self.commande,
+self.commande.prixTotal)
+                self.commande.estCommandeValidee = true
+                self.panneauInformation^commandeValidee(true)
                 self.commande^majCommande()
-        else 
-                self.panneauInformation^commandeValidée(false)
+        else
+                self.panneauInformation^commandeValidee(false)
+            \end{OMPost}
+\end{OMOperation}
 
-
-
-
-Opération : SystèmeWeb::changerQuantité(art:Article, qte:Quantité)
-Acteur du MdE : ListeCommande  
-CdU : Valider une commande
-Messages : 
+\begin{OMOperation}{changerQuantité(art : Article, qte : Quantité)}{ListeCommande}{Valider une commande}
+Messages :
 * PanneauInformation::{afficherCommande, commandeValidée}
 * ListeCommande::{majCommande}
-Pré :
-Post :  
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
 if not(self.commande.estCommandeVide) then
-                self.panneauInformation^afficherCommande(self.commande) 
-and
-                self.panneauInformation^commandeValidée(false) 
-and
+                self.panneauInformation^afficherCommande(self.commande)
+                self.panneauInformation^commandeValidee(false)
                 if art==self.commande.article then
-                        self.commande.prixTotal = self.commande.prixTotal@pre + (qte - 
+                        self.commande.prixTotal = self.commande.prixTotal@pre + (qte -
 self.commande.article.qteArticle) * art.prixArticle
-and
                         self.commande.article.qteArticle =qte
-                and 
                 self.commande^majCommande()
-                
+            \end{OMPost}
+\end{OMOperation}
 
-
-Opération : SystèmeWeb::estArticleCoché(art:Article)
-Acteur du MdE : ListeCommande
-CdU : Valider une commande
-Messages : 
+\begin{OMOperation}{estArticleCoché(art : Article)}{NavigateurWeb}{Valider une commande}
+Messages :
 * PanneauInformation::{afficherCommande, commandeValidée}
 * ListeCommande::{majCommande}
-Pré :
-Post :  
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
 if not(self.commande.estCommandeVide) then
-                self.panneauInformation^afficherCommande(self.commande) 
-and
-                self.panneauInformation^commandeValidée(false) 
-and
+                self.panneauInformation^afficherCommande(self.commande)
+                self.panneauInformation^commandeValidee(false)
                 if art==self.commande.article then
-                        if self.commande.article.estCoché then
-                                self.commande.article.estCoché = false
-                                self.commande.prixTotal = self.commande.prixTotal@pre - 
+                        if self.commande.article.estCoche then
+                                self.commande.article.estCoche = false
+                                self.commande.prixTotal = self.commande.prixTotal@pre -
 self.commande.article.qteArticle * art.prixArticle
-                        else 
-                                self.commande.article.estCoché = true
-                                self.commande.prixTotal = self.commande.prixTotal@pre + 
+                        else
+                                self.commande.article.estCoche = true
+                                self.commande.prixTotal = self.commande.prixTotal@pre +
 self.commande.article.qteArticle * art.prixArticle
-                        and 
                         self.commande^majCommande()
+                    \end{OMPost}
+\end{OMOperation}
 
-
-
-
-Opération : SystèmeWeb::configBal(bal:Balance, seuil:Seuil, qte:Quantité)
-Acteur du MdE : BtnConfigBalance 
-CdU : Configurer les balances
-Messages : 
+\begin{OMOperation}{configBal(bal : Balance, seuil : Seuil, qte : Quantite)}{BtnConfigBalance}{Configurer les balances}
+Messages :
 * PanneauInformation::{confirmConfigBal, erreurConfigBal}
-Pré :
-Post :  
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         if bal==self.balance then
                 if seuil <= 0 then
                         if qte <=0 then
                                 self.panneau.information^erreurConfigBal()
         else
                 self.panneauInformation^confirmConfigBal()
+            \end{OMPost}
+\end{OMOperation}
 
-
-Opération : SystèmeWeb::assignBal(bal:Balance, art:Article, seuil:Seuil, qte:Quantité)
-Acteur du MdE : BtnAssignBalance 
-CdU : Configurer les balances
+\begin{OMOperation}{assignBal(bal : Balance, art : Article, seuil : Seuil, qte : Quantité)}{BtnAssignBalance}{Configurer les balances}
 Messages :
 * PanneauInformation::{afficherBalance, confirmAssignBal, erreurAssignBal}
-Pré :
-Post : 
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         self.panneauInformation^afficherBalance(bal)
-and
         if bal==Null then
                 if art == self.commande.article then
                         if seuil <= 0 then
@@ -204,3 +153,6 @@ and
                                         self.panneau.information^erreurAssignBal()
         else
                 self.panneauInformation^confirmAssignBal()
+            \end{OMPost}
+\end{OMOperation}
+\end{OM}

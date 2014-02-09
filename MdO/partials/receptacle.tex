@@ -1,149 +1,161 @@
-﻿Modèle des opérations : Receptacle
+\begin{OM}{Receptacle}{Receptacle}
 
-
-Opération : Receptacle::rentrerCode(n:number)
-CdU : Réception d’une commande
-Pré :
-Post :
+\begin{OMOperation}{rentrerCode(n : number)}{PaveNum}{Réception d'une commande}
+Messages :
+* porteLaterale::{debloquerPorte}
+* panneauAffichage::{msgModifierCode, msgCodeIncorrect}
+* diode::{diodeVerte, diodeRouge}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
 if n = self.codeAdmin then
 self.mode = EnumMode::Admin
-and
 self.porteLaterale^debloquerPorte()
-and
 self.panneauAffichage^msgModifierCode(true)
-and
-self.diode^diodeVerte() 
-
-
-else if n = self.codeUser then 
+self.diode^diodeVerte()
+else if n = self.codeUser then
 self.mode = EnumMode::User
-and
 self.porteLaterale^debloquerPorte()
-and
 self.panneauAffichage^msgModifierCode(true)
-and
 self.diode^diodeVerte()
 else
 self.panneauAffichage^msgCodeIncorrect(true)
-and
 self.diode^diodeRouge()
-        
+\end{OMPost}
+\end{OMOperation}
 
-
-Opération : Receptacle::modifierCode(n:number)
-CdU : Réception d’une commande
-Pré :        
+\begin{OMOperation}{modifierCode(n : number)}{PaveNum}{Réception d'une commande}
+Messages :
+* panneauAffichage::{msgModifiercode}
+\begin{OMPre}
 not(self.porteLaterale.closedState)
-Post :
+\end{OMPre}
+\begin{OMPost}
         if self.mode == EnumMode::Admin then
                 self.codeAdmin = n
-and
 self.panneauAffichage^msgModifierCode(false)
         if self.mode == EnumMode::User then
                 self.codeUser = n
-and
 self.panneauAffichage^msgModifierCode(false)
+\end{OMPost}
+\end{OMOperation}
 
-
-                
-                
-
-
-Opération : Receptacle::verificationBadge(b:badge)
-CdU : Réception d’une commande
-Pré :
-Post : 
+\begin{OMOperation}{verificationBadge(b : badge)}{capteurBadge}{Réception d'une commande}
+Messages :
+* porteLaterale::{debloquerPorte}
+* panneauAffichage::{msgModifierCode, msgBadgeIncorrect}
+* diode::{diodeVerte, diodeRouge}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
 if b == self.idBadgeAdmin then
 self.mode = EnumMode::Admin
-and
 self.porteLaterale^debloquerPorte()
-and
 self.panneauAffichage^msgModifierCode(true)
-and
-self.diode^diodeVerte() 
-else if b == self.idBadgeUser then 
+self.diode^diodeVerte()
+else if b == self.idBadgeUser then
 self.mode = EnumMode::User
-and
 self.porteLaterale^debloquerPorte()
-and
 self.panneauAffichage^msgModifierCode(true)
-and
 self.diode^diodeVerte()
 else
 self.panneauAffichage^msgBadgeIncorrect(true)
-and
 self.diode^diodeRouge()
-        
+\end{OMPost}
+\end{OMOperation}
 
-
-Opération : Receptacle::verificationColis(idDestinataire:IdRFID)
-CdU : Livrer une commande
-Pré :
-Post :
+\begin{OMOperation}{verificationColis(idDestinataire : IdRFID)}{systemeDrone}{Livrer une commande}
+Messages :
+* systemeDrone::{colisCorrect}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         if self.id == idDestinataire then
                 self.systemeDrone^colisCorrect(true)
         else
                 self.systemeDrone^colisCorrect(false)
+            \end{OMPost}
+\end{OMOperation}
 
-
-Opération : Receptacle::ouverturePanneau()
-CdU : Livrer une commande
-Pré : not(self.panneauSuperieur.lockedState)
-Post :
+\begin{OMOperation}{ouverturePanneau()}{systemeDrone}{Livrer une commande}
+Messages :
+* panneauSuperieur::{ouvrirPanneau}
+* systemeDrone::{sendConfirmation}
+\begin{OMPre}
+not(self.panneauSuperieur.lockedState)
+\end{OMPre}
+\begin{OMPost}
         if self.panneauSuperieur^ouvrirPanneau() then
                 self.panneauSuperieur.closedState = false
-                and
                 self.systemeDrone^sendConfirmation(ConfirmMsg::PanneauOuvert)
-        
-                
+            \end{OMPost}
+\end{OMOperation}
 
-
-Opération : Receptacle::fermeturePanneau()
-CdU : Livrer une commande
-Pré : not(self.panneauSuperieur.lockedState)
-Post :
+\begin{OMOperation}{fermeturePanneau()}{systemeDrone}{Livrer une commande}
+Messages :
+* panneauSuperieur::{fermerPanneau}
+* systemeDrone::{sendConfirmation}
+\begin{OMPre}
+ not(self.panneauSuperieur.lockedState)
+\end{OMPre}
+\begin{OMPost}
         if self.panneauSuperieur^fermerPanneau() then
                 self.panneauSuperieur.closedState = true
-                and
                 self.systemeDrone^sendConfirmation(ConfirmMsg::PanneauFerme)
+            \end{OMPost}
+\end{OMOperation}
 
-
-Opération : Receptacle::timeoutVerification()
-CdU : Livrer une commande
-Pré :
-Post :
+\begin{OMOperation}{timeoutVerification()}{systemeDrone}{Livrer une commande}
+Messages :
+* PanneauAffichage{msgHorsService}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         self.panneauAffichage^msgHorsService(true)
+    \end{OMPost}
+\end{OMOperation}
 
-
-Opération : Receptacle::dronePresent()
-CdU : Livrer une commande
-Pré : not(self.supportDrone.lockedState)
-Post :
+\begin{OMOperation}{dronePresent()}{supportDrone}{Livrer une commande}
+Messages :
+* supportDrone::{bloquerDrone}
+\begin{OMPre}
+not(self.supportDrone.lockedState)
+\end{OMPre}
+\begin{OMPost}
         self.supportDrone^bloquerDrone(true)
-        and
         self.supportDrone.lockedState = true
+    \end{OMPost}
+\end{OMOperation}
 
-
-Opération : Receptacle::porteFerme()
-CdU : Livrer une commande
-Pré :
-Post :
+\begin{OMOperation}{porteFerme()}{PorteLaterale}{Livrer une commande}
+Messages :
+* porteLaterale::{bloquerPorte}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         self.porteLaterale^bloquerporte()
-        and
         self.porteLaterale.lockedState = true
+    \end{OMPost}
+\end{OMOperation}
 
-
-Opération : Receptacle::panneauFerme()
-CdU : Livrer une commande
-Pré :
-Post :
+\begin{OMOperation}{panneauFerme()}{PanneauSuperieur}{Livrer une commande}
+Messages :
+* panneauSuperieur::{bloquerPanneau}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         self.panneauSuperieur^bloquerPanneau()
-        and
         self.panneauSuperieur.lockedState = true
+    \end{OMPost}
+\end{OMOperation}
 
-
-Opération : Receptacle::colisPresent()
-CdU : Livrer une commande
-Pré :
-Post :
+\begin{OMOperation}{colisPresent()}{capteurRFID}{Livrer une commande}
+Messages :
+* systemeClient::{signalerReception}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         Self.systemeClient^signalerReception()
+    \end{OMPost}
+\end{OMOperation}
+\end{OM}
