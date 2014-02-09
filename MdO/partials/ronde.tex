@@ -1,137 +1,117 @@
-Modèle des opérations : Système Ronde
+\begin{OM}{SystemeRonde}{Système Ronde}
 
-
-opération : cdeVisualiserDrone
-C.d.U : Superviser Ronde
-Message: 
-        ecranSupervision::{visualiserDrones}
-Pré-condition : 
-Post-condition :
+\begin{OMOperation}{cdeVisualiserDrone()}{Superviser Ronde}{}
+Messages :
+    ecranSupervision::{visualiserDrones}
+    \begin{OMPre}
+    \end{OMPre}
+    \begin{OMPost}
 self.ecranSupervision^visualiserDrones()
+\end{OMPost}
+\end{OMOperation}
 
+\begin{OMOperation}{cdeVisualiserTournées()}{Superviser Ronde}{}
+Messages :
+ecranSupervision::{visualiserTournees}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
+self.ecranSupervision^visualiserTournees()
+\end{OMPost}
+\end{OMOperation}
 
-
-
- opération : cdeVisualiserTournées
-C.d.U : Superviser Ronde
-Message:
-ecranSupervision::{visualiserTournees} 
-Pré-condition : 
-Post-condition :
-self.ecranSupervision^visualiserTournées()
-
-
-
-
- opération : envoyerCommande(cde: Commande)
-C.d.U : Livrer une tournée
-Message:
-BD::{ajouterCommande,calculerTournées} 
-Pré-condition : 
-Post-condition :
+\begin{OMOperation}{envoyerCommande(cde : Commande)}{Livrer une tournée}{}
+Messages :
+BD::{ajouterCommande,calculerTournées}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         self.bd^ajouterCommande(cde)
 self.bd^calculerTournees()
+\end{OMPost}
+\end{OMOperation}
 
-
-
-
-opération : annulerCommade(List<Commande> lst)
-C.d.U : Livrer une tournée
-Message:
-BD::{supprimerCommande,calculerTournees,} 
-Pré-condition : 
-Post-condition :
+\begin{OMOperation}{annulerCommade(lst : ListeCommande)}{Livrer une tournée}{}
+Messages :
+BD::{supprimerCommande,calculerTournees,}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
 self.bd^supprimerCommande(lst)
 self.bd^calculerTournees()
+\end{OMPost}
+\end{OMOperation}
 
-
-
-
-
-
-
-
-
-
-opération : notifierExpiration(t: Tournee)
-C.d.U : Livrer une tournée
-Message:
+\begin{OMOperation}{notifierExpiration(t : Tournee)}{Livrer une tournée}{}
+Messages :
 drone::{envoyerDrone}
 BD::{supprimerCommande}
-boiteMail::{envoyerMessage} 
-Pré-condition : 
-Post-condition 
+boiteMail::{envoyerMessage}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
 self.bd^supprimerCommande(sender.tournee.lstCommande)
 sender.tournee.drone^envoyerDrone()
 self.boiteMail^envoyerMessage(sender.tournee.drone.id,DEPART_DRONE)
 sender.tournee.drone.oclInState(Livraison)
+\end{OMPost}
+\end{OMOperation}
 
-
-
-
-
-
-opération : signalerPosition(p: Position)
-C.d.U : Livrer une tournée
-Message:
+\begin{OMOperation}{signalerPosition(p : Position)}{Livrer une tournée}{}
+Messages :
 ecranSupervision::{visualiserDrone}
-BD::{majPositionDrone} 
-Pré-condition : 
-Post-condition 
+BD::{majPositionDrone}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
 self.bd^majPositionDrone(sender.drone.id, p)
 self.ecranSupervision^visualiserDrone()
+\end{OMPost}
+\end{OMOperation}
 
-
-
-
-opération : signalerLivraison(cde: Commande)
-C.d.U : Livrer une tournée
-Message:
-BD::{supprimerCommande} 
-Pré-condition : 
-Post-condition 
+\begin{OMOperation}{signalerLivraison(cde : Commande)}{Livrer une tournée}{}
+Messages :
+BD::{supprimerCommande}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
 self.bd^supprimerCommande(cde)
+\end{OMPost}
+\end{OMOperation}
 
-
-
-
-
-
-opération : signalerAnormalie( a: Anormalie)
-C.d.U : Livrer une tournée
-Message:
+\begin{OMOperation}{signalerAnormalie(a : Anormalie)}{Livrer une tournée}{}
+Messages :
 BD::{majEtatDrone}
-boiteMail::{envoyerMessage}  
-Pré-condition : 
-Post-condition 
+boiteMail::{envoyerMessage}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
 sender.drone.oclInState(Erreur)
 self.bd.majEtatDrone(sender.drone.id, a)
 self.boiteMail^envoyerMessage(sender.drone.id, a)
+\end{OMPost}
+\end{OMOperation}
 
-
-
-
-opération : signalerRetour()
-C.d.U : Livrer une tournée
-Message:
+\begin{OMOperation}{signalerRetour()}{Livrer une tournée}{}
+Messages :
 BD::{majEtatDrone}
-boiteMail::{envoyerMessage}  
-Pré-condition : 
-Post-condition 
+boiteMail::{envoyerMessage}
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         self.bd.majEtatDrone(sender.drone.id,PRET)
         self.boiteMail^envoyerMessage(sender.drone.id,RETOUR)
         sender.drone.oclInState(Inactif)
+    \end{OMPost}
+\end{OMOperation}
 
-
-
-
-opération : estOperationnel()
-C.d.U : Livrer une tournée
-Message:
-BD::{majEtatDrone} 
+\begin{OMOperation}{estOperationnel()}{Livrer une tournée}{}
+Messages :
+BD::{majEtatDrone}
 DronePhysique::{envoyerDrone}
-Pré-condition : 
-Post-condition 
+\begin{OMPre}
+\end{OMPre}
+\begin{OMPost}
         self.bd.majEtatDrone(idDrone,BON_ETATt)
         if sender.drone.Tournee.lstCommandes is null
                 sender.drone.oclInState(Inactif)
@@ -139,3 +119,6 @@ Post-condition
         else
                 sender.drone.oclInState(Livraison)
                 self.sender^envoyerDrone()
+            \end{OMPost}
+\end{OMOperation}
+\end{OM}
