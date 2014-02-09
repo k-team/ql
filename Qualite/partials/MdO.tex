@@ -23,6 +23,7 @@ Cette étude doit suivre un schéma précis constituée comme suit:
 \end{description}
 
 \textbf{Exemple du modèle textuelle}\\
+Cette étude doit suivre un schéma précis constituée comme suit:
  \\
 \begin{description}
 \item[Opération :]  DAB::éjecterMonnaie() 
@@ -30,16 +31,16 @@ Cette étude doit suivre un schéma précis constituée comme suit:
 \item[CdU :] acheter une boisson
 
 \item[Message :] \\
-\>PanneauInformation ::{afficherMonnaie, monnaieInsuffisante, boissonNonDispo}\\
-\>RecepMonnaie::{relacherMonnaie}
+PanneauInformation ::{afficherMonnaie, monnaieInsuffisante, boissonNonDispo\}\\
+RecepMonnaie::{relacherMonnaie}
 
 \item[Pré :] 
 \item[Post :] \\
-	\>self.montantReçu = 0 and\\
-	\>self.récepMonnaie ^relâcherMonnaie() and\\
-	\>self.panneauInformation ^afficherMonnaie(0) and\\
-	\>self.panneauInformation ^monnaieInsuffisante(false) and\\
-	\>self.panneauInformation ^ boissonNonDispo(false) 
+	self.montantReçu = 0 and\\
+	self.récepMonnaie ^relâcherMonnaie() and\\
+	self.panneauInformation ^afficherMonnaie(0) and\\
+	self.panneauInformation ^monnaieInsuffisante(false) and\\
+	self.panneauInformation ^ boissonNonDispo(false) \\
 
 \end{description}
 
