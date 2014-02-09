@@ -30,8 +30,9 @@
 }
 
 \newcommand{\EMOperation}[3]{
-    \item $#1$ : #2 \\
-    CdU concerné : \textit{\ifx&#3&aucun\else#3\fi}
+    \item $#1$ : #2
+    \ifx&#3&\else \\
+    CdU concerné : \textit{#3}\fi
 }
 
 \begin{document}

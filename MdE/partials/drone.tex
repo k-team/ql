@@ -1,41 +1,71 @@
 \begin{EM}{Drone}
-    \EMActor{tapisRoulant}{}
-    \begin{EMUCActor}{}
-        \EMOperation{colisPret()}{}{}
-        \EMOperation{activerTapis(e)}{}{}
+    \EMActor{tapisRoulant}{Tapis roulant permettant de faire circuler les colis
+        à l'intérieur du drone (notemment pour les déposer).}
+    \begin{EMUCActor}{Drone}
+        \EMOperation{colisPret()}{Signale que le prochain colis est en position
+            pour le dépôt.}{}
+        \EMOperation{activerTapis(e)}{Si e est vrai, active le tapis roulant.
+            Sinon, arrête le tapis roulant.}{}
     \end{EMUCActor}
 
-    \EMActor{trappe}{}
-    \begin{EMUCActor}{}
-        \EMOperation{OuvrirTrappe()}{}{}
-        \EMOperation{FermerTrappe()}{}{}
-        \EMOperation{ActiverSystUrgence()}{}{}
+    \EMActor{trappe}{Trappe se situant sous le drone permettant de déposer les
+        colis. Une système de sécurité peut se fermer au cas où le système se
+        bloque en position ouverte.}
+    \begin{EMUCActor}{Drone}
+        \EMOperation{OuvrirTrappe()}{Demande du drone à la trappe pour que
+            celle-ci passe en position ouverte.}{}
+        \EMOperation{FermerTrappe()}{Demande du drone à la trappe pour que
+            celle-ci passe en position fermée.}{}
+        \EMOperation{ActiverSystUrgence()}{Demande du drone de fermer le
+            système d'urgence de la trappe.}{}
     \end{EMUCActor}
 
-    \EMActor{systemeRonde}{}
-    \begin{EMUCActor}{}
-        \EMOperation{EnvoyerDrone(itineraire)}{}{}
-        \EMOperation{ConfirmationLivraison()}{}{}
-        \EMOperation{SignalementErreur(msg)}{}{}
-        \EMOperation{SignalerRetour()}{}{}
-        \EMOperation{EstDisponible(e)}{}{}
+    \EMActor{systemeRonde}{Système de l'entreprise ronde. Comprend tout ce qui est relatif à l'entrepot.}
+    \begin{EMUCActor}{Système Ronde}
+        \EMOperation{EnvoyerDrone(itineraire)}{Demande au drone de partir de
+            l'entrepôt et d'effectuer la tournée correspondant à l'itinéraire
+            prévu.}{}
+        \EMOperation{ConfirmationLivraison()}{Signal du drone à l'entrepôt pour
+            signaler qu'il a bien effectué sa livraison.}{}
+        \EMOperation{SignalementErreur(msg)}{Signal du drone à l'entrepôt pour
+            indiquer qu'une erreur est intervenu lors de la tournée (Drone
+            tombe en panne, réceptacle plein, ...).}{}
+        \EMOperation{SignalerRetour()}{Signal du drone à l'entrepôt indiquant
+            que le drone a fini sa tournée et est de retour à l'entrepôt.}{}
+        \EMOperation{EstDisponible(e)}{Si e est vrai, signal du drone à
+            l'entrepôt indiquant que le drone est disponible pour effectuer une
+            tournée. Sinon, indique que le drone ne peut pas être choisit pour
+            effectuer une tournée.}{}
     \end{EMUCActor}
 
-    \EMActor{listeColis}{}
-    \begin{EMUCActor}{}
-        \EMOperation{verificationColisActuel(idColis)}{}{}
+    \EMActor{listeColis}{Liste de tous les colis contenus dans le drone.}
+    \begin{EMUCActor}{Drone}
+        \EMOperation{verificationColisActuel(idColis)}{Renvoie les information
+            du colis en première position.}{}
+        \EMOperation{getCurColis()}{Demande du drone pour recevoir les
+            informations du colis se trouvant en position de livraison sur le
+            tapis roulant.}{}
+    \end{EMUCActor}
+
+    \EMActor{balance}{Une balance contenue dans le drone permettant de
+        connaître le poids total des colis actuellement contenus dans le
+        drone.}
+    \begin{EMUCActor}{Drone}
+        \EMOperation{PoidActuel(n)}{Signal de la balance vers le drone
+            indiquant le poid total actuel des colis.}{}
+    \end{EMUCActor}
+
+    \EMActor{ListeTimer}{Une liste de timers permettant au drone d'estimer si
+        le réceptacle est tombé en panne.}
+    \begin{EMUCActor}{Drone}
+        \EMOperation{expirationTimer(idTimer)}{Indique qu'un timer est arrivé à
+            expiration (ce qui signifie que le réceptacle ne nous a pas
+            répondu).}{}
+        \EMOperation{enclenchementTimer(timer)}{Met en place un timer
+            correspondant aux informations passé en paramètres.}{}
+        \EMOperation{desactiverTimer(command)}{Désactive le timer
+            correspondant à la commande.}{}
     \end{EMUCActor}
 
     \EMActor{systemeReceptacle}{Se référer à la section \ref{sec:receptacle}.}
-
-    \EMActor{balance}{}
-    \begin{EMUCActor}{}
-        \EMOperation{PoidActuel(n)}{}{}
-    \end{EMUCActor}
-
-    \EMActor{timer}{}
-    \begin{EMUCActor}{}
-        \EMOperation{expirationTimer(idTimer)}{}{}
-        \EMOperation{enclenchementTimer(timer)}{}{}{}
-    \end{EMUCActor}
 \end{EM}
